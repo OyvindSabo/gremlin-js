@@ -2,7 +2,7 @@
  * In gremlin-js we store graphs using the GraphSON format documented here:
  * https://github.com/tinkerpop/blueprints/wiki/GraphSON-Reader-and-Writer-Library
  */
-const graph = {
+const graphData = {
   mode: 'NORMAL',
   vertices: [
     {
@@ -124,7 +124,14 @@ class Traversal {
    * collection the traversal should start with. If no parameters are supplied,
    * a collection of all the nodes in the graph will be returned.
    */
-  E(...edgeIds) {}
+  E(...edgeIds) {
+    const collectionData = edgeIds.length
+      ? this.graphData.edges.filter(edge => edgeIds.includes(edge._id))
+      : this.graphData.edges;
+    const collection = new Collection(this, collectionData);
+    this.traversal.push(collection);
+    return collection;
+  }
   /**
    * Returns a collection of nodes and sets itself as the traversal
    * An arbitrary number of node ids can be supplied to say what nodes in the
@@ -207,9 +214,12 @@ class Collection {
 
 /*const graph = TinkerGraph.open();
 const g = graph.traversal();*/
-const g = new Traversal(graph);
+// Assuming I already have graphData stored in local memory
+const g = new Traversal(graphData);
 console.log(`g.V('1').next() ==>`, g.V('1').next());
 console.log(`g.V().next() ==>`, g.V().next());
+console.log(`g.E('10').next() ==>`, g.E('10').next());
+console.log(`g.E().next() ==>`, g.E().next());
 /*const marko = g.addV('person').property('name', 'marko').property('age',29).next();
 const lop = g.addV("software").property('name','lop').property('lang', 'java').next();
 g.addE("created").from(marko).to(lop).property('weight', 0.6).iterate();*/
