@@ -139,14 +139,13 @@ class Traversal {
    * a collection of all the nodes in the graph will be returned.
    */
   V(...vertexIds) {
-    const collectionData = vertexIds.length
-      ? this.graphData.vertices.filter(vertice =>
-          vertexIds.includes(vertice._id)
-        )
-      : this.graphData.vertices;
-    const collection = new Collection(this, collectionData);
-    this.traversal.push(collection);
-    return collection;
+    const allVertices = this.graphData.vertices;
+    const newCollectionData = vertexIds.length
+      ? allVertices.filter(vertice => vertexIds.includes(vertice._id))
+      : allVertices;
+    const newCollection = new Collection(this, newCollectionData);
+    this.traversal.push(newCollection);
+    return newCollection;
   }
 }
 
@@ -156,7 +155,7 @@ class Collection {
      * this.traversal is a reference to the traversal which stores the path of
      * which this collection is a step
      */
-    this.traversal;
+    this.traversal = traversal;
     // this.collection is a subset of this.graph
     this.collectionData = collectionData;
   }
@@ -203,8 +202,36 @@ class Collection {
    * An arbitrary amount of string arguments can be supplied to specify the
    * label of the edges to follow.
    */
-  out(...args) {}
-  outE() {}
+  out(...edgeTypes) {
+    const allEdges = this.traversal.graphData.edges;
+    const allVertices = this.traversal.graphData.vertices;
+    const edges = (edgeTypes.length
+      ? allEdges.filter(edge => edgeTypes.includes(edge._label))
+      : allEdges
+    ).filter(edge =>
+      this.collectionData.map(item => item._id).includes(edge._outV)
+    );
+    const newCollectionData = allVertices.filter(vertice =>
+      edges.map(edge => edge._inV).includes(vertice._id)
+    );
+    const newCollection = new Collection(this.traversal, newCollectionData);
+    this.traversal.traversal.push(newCollection);
+    return newCollection;
+  }
+  outE(...edgeTypes) {
+    const allEdges = this.traversal.graphData.edges;
+    const allVertices = this.traversal.graphData.vertices;
+    const edges = (edgeTypes.length
+      ? allEdges.filter(edge => edgeTypes.includes(edge._label))
+      : allEdges
+    ).filter(edge =>
+      this.collectionData.map(item => item._id).includes(edge._outV)
+    );
+    const newCollectionData = edges;
+    const newCollection = new Collection(this.traversal, newCollectionData);
+    this.traversal.traversal.push(newCollection);
+    return newCollection;
+  }
   path() {}
   repeat() {}
   sideEffect() {}
@@ -220,6 +247,34 @@ console.log(`g.V('1').next() ==>`, g.V('1').next());
 console.log(`g.V().next() ==>`, g.V().next());
 console.log(`g.E('10').next() ==>`, g.E('10').next());
 console.log(`g.E().next() ==>`, g.E().next());
+console.log(
+  `g.V('1').out().next()`,
+  g
+    .V('1')
+    .out()
+    .next()
+);
+console.log(
+  `g.V('1').out('knows').next()`,
+  g
+    .V('1')
+    .out('knows')
+    .next()
+);
+console.log(
+  `g.V('1').out('knows').next()`,
+  g
+    .V('1')
+    .out('knows', 'created')
+    .next()
+);
+console.log(
+  `g.V('1').outE().next()`,
+  g
+    .V('1')
+    .outE()
+    .next()
+);
 /*const marko = g.addV('person').property('name', 'marko').property('age',29).next();
 const lop = g.addV("software").property('name','lop').property('lang', 'java').next();
 g.addE("created").from(marko).to(lop).property('weight', 0.6).iterate();*/
