@@ -1,5 +1,18 @@
 {
+  "name": "gremlin-js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "keywords": [
+    "gremlin"
+  ],
+  "author": "Øyvind Sæbø",
+  "license": "MIT",
   "devDependencies": {
-    "ava": "^2.2.0"
+    "ava": "^2.2.0",
+    "typescript": "^3.5.3"
   }
 }
