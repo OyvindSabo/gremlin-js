@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var in_1 = require("./in");
-var out_1 = require("./out");
-var outE_1 = require("./outE");
-var inE_1 = require("./inE");
+var in_1 = require("./in/in");
+var out_1 = require("./out/out");
+var outE_1 = require("./outE/outE");
+var inE_1 = require("./inE/inE");
 var Collection = /** @class */ (function () {
     function Collection(traversal, collectionData) {
         /**

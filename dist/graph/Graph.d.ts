@@ -1,10 +1,12 @@
+import Traversal from '../traversal/Traversal';
+import { GraphData } from '../tinkerGraph/TinkerGraph';
 /**
- * The Graph class is mainly responsble for reading a json file written in
- * the GraphSON format.
+ * The Graph class is mainly responsble for storing graphData, from which new
+ * traversals can be initiated.
  */
 export default class Graph {
-    constructor();
-    open(): void;
-    traversal(): void;
+    graphData: GraphData;
+    constructor(graphData: GraphData);
+    traversal(): Traversal;
     close(): void;
 }
