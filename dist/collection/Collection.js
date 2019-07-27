@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var both_1 = require("./both/both");
+var bothE_1 = require("./bothE/bothE");
 var in_1 = require("./in/in");
+var inE_1 = require("./inE/inE");
 var out_1 = require("./out/out");
 var outE_1 = require("./outE/outE");
-var inE_1 = require("./inE/inE");
-var both_1 = require("./both/both");
 var Collection = /** @class */ (function () {
     function Collection(traversal, collectionData) {
         /**
@@ -26,7 +27,15 @@ var Collection = /** @class */ (function () {
         this.traversal.traversal.push(newCollection);
         return newCollection;
     };
-    Collection.prototype.bothE = function () { };
+    Collection.prototype.bothE = function () {
+        var edgeTypes = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            edgeTypes[_i] = arguments[_i];
+        }
+        var newCollection = bothE_1._bothE.apply(void 0, [this].concat(edgeTypes));
+        this.traversal.traversal.push(newCollection);
+        return newCollection;
+    };
     Collection.prototype.branch = function () { };
     /**
      * Basically a ternary operator

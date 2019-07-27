@@ -1,11 +1,12 @@
 import Traversal from '../traversal/Traversal';
+import { _both } from './both/both';
+import { _bothE } from './bothE/bothE';
 import { _in } from './in/in';
+import { _inE } from './inE/inE';
 import { _out } from './out/out';
 import { _outE } from './outE/outE';
-import { _inE } from './inE/inE';
-import { VerticeData, EdgeData } from '../tinkerGraph/TinkerGraph';
 import { CollectionData } from './types';
-import { _both } from './both/both';
+import { VerticeData, EdgeData } from '../tinkerGraph/TinkerGraph';
 
 export default class Collection {
   traversal: Traversal;
@@ -26,7 +27,11 @@ export default class Collection {
     this.traversal.traversal.push(newCollection);
     return newCollection;
   }
-  bothE() {}
+  bothE(...edgeTypes: string[]) {
+    const newCollection = _bothE(this, ...edgeTypes);
+    this.traversal.traversal.push(newCollection);
+    return newCollection;
+  }
   branch() {}
   /**
    * Basically a ternary operator

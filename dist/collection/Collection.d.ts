@@ -1,6 +1,6 @@
 import Traversal from '../traversal/Traversal';
-import { VerticeData, EdgeData } from '../tinkerGraph/TinkerGraph';
 import { CollectionData } from './types';
+import { VerticeData, EdgeData } from '../tinkerGraph/TinkerGraph';
 export default class Collection {
     traversal: Traversal;
     collectionData: (VerticeData | EdgeData)[];
@@ -8,7 +8,7 @@ export default class Collection {
     and(): void;
     as(): void;
     both(...edgeTypes: string[]): Collection;
-    bothE(): void;
+    bothE(...edgeTypes: string[]): Collection;
     branch(): void;
     /**
      * Basically a ternary operator
