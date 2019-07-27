@@ -1,4 +1,4 @@
-Implementation of Gremlin in JavaScript which makes it easy to query GraphSON files.
+Implementation of Gremlin in TypeScript/JavaScript which makes it easy to query GraphSON files.
 
 ### Install dependencies
 
