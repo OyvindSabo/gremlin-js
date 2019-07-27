@@ -5,6 +5,7 @@ import { _outE } from './outE/outE';
 import { _inE } from './inE/inE';
 import { VerticeData, EdgeData } from '../tinkerGraph/TinkerGraph';
 import { CollectionData } from './types';
+import { _both } from './both/both';
 
 export default class Collection {
   traversal: Traversal;
@@ -20,7 +21,11 @@ export default class Collection {
   }
   and() {}
   as() {}
-  both() {}
+  both(...edgeTypes: string[]) {
+    const newCollection = _both(this, ...edgeTypes);
+    this.traversal.traversal.push(newCollection);
+    return newCollection;
+  }
   bothE() {}
   branch() {}
   /**
@@ -64,6 +69,7 @@ export default class Collection {
    *      .option(none, values('name'))
    */
   option() {}
+  otherV() {}
   /**
    * Returns a collection of all nodes reached by following outward edges.
    * An arbitrary amount of string arguments can be supplied to specify the

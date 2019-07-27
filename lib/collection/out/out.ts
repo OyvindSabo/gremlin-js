@@ -13,6 +13,5 @@ export const _out = (collection: Collection, ...edgeTypes: string[]) => {
     edges.map(edge => edge._inV).includes(vertice._id)
   );
   const newCollection = new Collection(collection.traversal, newCollectionData);
-  collection.traversal.traversal.push(newCollection);
   return newCollection;
 };

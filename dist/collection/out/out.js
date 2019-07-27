@@ -17,6 +17,5 @@ exports._out = function (collection) {
         return edges.map(function (edge) { return edge._inV; }).includes(vertice._id);
     });
     var newCollection = new Collection_1.default(collection.traversal, newCollectionData);
-    collection.traversal.traversal.push(newCollection);
     return newCollection;
 };

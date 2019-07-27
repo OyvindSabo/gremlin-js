@@ -96,12 +96,18 @@ const graphData = {
 
 const g = new Traversal(graphData);
 
-test('Get all vertices reached through incoming edges', t => {
+test('Get all vertices reached through outgoing or incoming edges', t => {
   const actualResult = g
-    .V('3')
-    .in()
+    .V('4')
+    .both()
     .next();
   const expectedResult = [
+    {
+      name: 'lop',
+      lang: 'java',
+      _id: '3',
+      _type: 'vertex',
+    },
     {
       name: 'marko',
       age: 29,
@@ -109,52 +115,58 @@ test('Get all vertices reached through incoming edges', t => {
       _type: 'vertex',
     },
     {
-      name: 'peter',
-      age: 35,
-      _id: '6',
-      _type: 'vertex',
-    },
-    {
-      name: 'josh',
-      age: 32,
-      _id: '4',
+      name: 'ripple',
+      lang: 'java',
+      _id: '5',
       _type: 'vertex',
     },
   ];
   t.deepEqual(actualResult, expectedResult);
 });
 
-test('Get all vertices reached through incoming edges of a specific type', t => {
+test('Get all vertices reached through outgoing or incoming edges of a specific type', t => {
   const actualResult = g
-    .V()
-    .in('knows')
+    .V('4')
+    .both('created')
     .next();
   const expectedResult = [
     {
-      name: 'marko',
-      age: 29,
-      _id: '1',
+      name: 'lop',
+      lang: 'java',
+      _id: '3',
+      _type: 'vertex',
+    },
+    {
+      name: 'ripple',
+      lang: 'java',
+      _id: '5',
       _type: 'vertex',
     },
   ];
   t.deepEqual(actualResult, expectedResult);
 });
 
-test('Get all vertices reached through outgoing edges of a nonexistent type', t => {
+test('Get all vertices reached through outgoing or incoming edges of a nonexistent type', t => {
   const actualResult = g
     .V()
-    .in('uses')
+    .both('uses')
     .next();
   const expectedResult: CollectionData = [];
   t.deepEqual(actualResult, expectedResult);
 });
 
-test('Get all vertices reached through incoming edges of any of multiple specified edge types', t => {
+test('Get all vertices reached through outgoing or incoming edges of any of multiple specified edge types', t => {
   const actualResult = g
-    .V('4', '5')
-    .in('knows', 'created')
+    .V('4')
+    .both('knows', 'created')
     .next();
   const expectedResult = [
+    {
+      name: 'lop',
+      lang: 'java',
+      _id: '3',
+      _type: 'vertex',
+    },
     {
       name: 'marko',
       age: 29,
@@ -162,9 +174,9 @@ test('Get all vertices reached through incoming edges of any of multiple specifi
       _type: 'vertex',
     },
     {
-      name: 'josh',
-      age: 32,
-      _id: '4',
+      name: 'ripple',
+      lang: 'java',
+      _id: '5',
       _type: 'vertex',
     },
   ];

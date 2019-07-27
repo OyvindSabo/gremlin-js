@@ -136,7 +136,7 @@ ava_1.default('Get all vertices reached through incoming edges of a specific typ
     ];
     t.deepEqual(actualResult, expectedResult);
 });
-ava_1.default('Get all vertices reached through an outgoing edge of a nonexistent type', function (t) {
+ava_1.default('Get all vertices reached through outgoing edges of a nonexistent type', function (t) {
     var actualResult = g
         .V()
         .in('uses')
@@ -144,7 +144,7 @@ ava_1.default('Get all vertices reached through an outgoing edge of a nonexisten
     var expectedResult = [];
     t.deepEqual(actualResult, expectedResult);
 });
-ava_1.default('Get all vertices reached through any of multiple specified edge types', function (t) {
+ava_1.default('Get all vertices reached through incoming edges of any of multiple specified edge types', function (t) {
     var actualResult = g
         .V('4', '5')
         .in('knows', 'created')

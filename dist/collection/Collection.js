@@ -4,6 +4,7 @@ var in_1 = require("./in/in");
 var out_1 = require("./out/out");
 var outE_1 = require("./outE/outE");
 var inE_1 = require("./inE/inE");
+var both_1 = require("./both/both");
 var Collection = /** @class */ (function () {
     function Collection(traversal, collectionData) {
         /**
@@ -16,7 +17,15 @@ var Collection = /** @class */ (function () {
     }
     Collection.prototype.and = function () { };
     Collection.prototype.as = function () { };
-    Collection.prototype.both = function () { };
+    Collection.prototype.both = function () {
+        var edgeTypes = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            edgeTypes[_i] = arguments[_i];
+        }
+        var newCollection = both_1._both.apply(void 0, [this].concat(edgeTypes));
+        this.traversal.traversal.push(newCollection);
+        return newCollection;
+    };
     Collection.prototype.bothE = function () { };
     Collection.prototype.branch = function () { };
     /**
@@ -68,6 +77,7 @@ var Collection = /** @class */ (function () {
      *      .option(none, values('name'))
      */
     Collection.prototype.option = function () { };
+    Collection.prototype.otherV = function () { };
     /**
      * Returns a collection of all nodes reached by following outward edges.
      * An arbitrary amount of string arguments can be supplied to specify the

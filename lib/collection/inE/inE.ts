@@ -10,6 +10,5 @@ export const _inE = (collection: Collection, ...edgeTypes: string[]) => {
   );
   const newCollectionData = edges;
   const newCollection = new Collection(collection.traversal, newCollectionData);
-  collection.traversal.traversal.push(newCollection);
   return newCollection;
 };

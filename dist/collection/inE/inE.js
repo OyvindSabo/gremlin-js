@@ -14,6 +14,5 @@ exports._inE = function (collection) {
     });
     var newCollectionData = edges;
     var newCollection = new Collection_1.default(collection.traversal, newCollectionData);
-    collection.traversal.traversal.push(newCollection);
     return newCollection;
 };

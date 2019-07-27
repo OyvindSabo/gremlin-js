@@ -146,7 +146,7 @@ test('Get all vertices reached through outgoing edges of a specific type', t => 
   t.deepEqual(actualResult, expectedResult);
 });
 
-test('Get all vertices reached through an outgoing edge of a nonexistent type', t => {
+test('Get all vertices reached through outgoing edges of a nonexistent type', t => {
   const actualResult = g
     .V()
     .out('uses')
@@ -155,7 +155,7 @@ test('Get all vertices reached through an outgoing edge of a nonexistent type', 
   t.deepEqual(actualResult, expectedResult);
 });
 
-test('Get all vertices reached through any of multiple specified edge types', t => {
+test('Get all vertices reached through outgoing edges of any of multiple specified edge types', t => {
   const actualResult = g
     .V('1')
     .out('knows', 'created')

@@ -7,7 +7,7 @@ export default class Collection {
     constructor(traversal: Traversal, collectionData: CollectionData);
     and(): void;
     as(): void;
-    both(): void;
+    both(...edgeTypes: string[]): Collection;
     bothE(): void;
     branch(): void;
     /**
@@ -41,6 +41,7 @@ export default class Collection {
      *      .option(none, values('name'))
      */
     option(): void;
+    otherV(): void;
     /**
      * Returns a collection of all nodes reached by following outward edges.
      * An arbitrary amount of string arguments can be supplied to specify the
