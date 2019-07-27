@@ -94,22 +94,22 @@ var graphData = {
     ],
 };
 var g = new Traversal_1.default(graphData);
-ava_1.default('Get all vertices reached through incoming edges', function (t) {
+ava_1.default('Get all vertices reached through outgoing edges', function (t) {
     var actualResult = g
-        .V('3')
-        .in()
+        .V('1')
+        .out()
         .next();
     var expectedResult = [
         {
-            name: 'marko',
-            age: 29,
-            _id: '1',
+            name: 'lop',
+            lang: 'java',
+            _id: '3',
             _type: 'vertex',
         },
         {
-            name: 'peter',
-            age: 35,
-            _id: '6',
+            name: 'vadas',
+            age: 27,
+            _id: '2',
             _type: 'vertex',
         },
         {
@@ -121,16 +121,22 @@ ava_1.default('Get all vertices reached through incoming edges', function (t) {
     ];
     t.deepEqual(actualResult, expectedResult);
 });
-ava_1.default('Get all vertices reached through incoming edges of a specific type', function (t) {
+ava_1.default('Get all vertices reached through outgoing edges of a specific type', function (t) {
     var actualResult = g
         .V()
-        .in('knows')
+        .out('created')
         .next();
     var expectedResult = [
         {
-            name: 'marko',
-            age: 29,
-            _id: '1',
+            name: 'lop',
+            lang: 'java',
+            _id: '3',
+            _type: 'vertex',
+        },
+        {
+            name: 'ripple',
+            lang: 'java',
+            _id: '5',
             _type: 'vertex',
         },
     ];
@@ -139,21 +145,27 @@ ava_1.default('Get all vertices reached through incoming edges of a specific typ
 ava_1.default('Get all vertices reached through a nonexistent type', function (t) {
     var actualResult = g
         .V()
-        .in('uses')
+        .out('uses')
         .next();
     var expectedResult = [];
     t.deepEqual(actualResult, expectedResult);
 });
 ava_1.default('Get all vertices reached through any of multiple specified edge types', function (t) {
     var actualResult = g
-        .V('4', '5')
-        .in('knows', 'created')
+        .V('1')
+        .out('knows', 'created')
         .next();
     var expectedResult = [
         {
-            name: 'marko',
-            age: 29,
-            _id: '1',
+            name: 'lop',
+            lang: 'java',
+            _id: '3',
+            _type: 'vertex',
+        },
+        {
+            name: 'vadas',
+            age: 27,
+            _id: '2',
             _type: 'vertex',
         },
         {

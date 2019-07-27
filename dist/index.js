@@ -116,26 +116,6 @@ console.log("g.V('1').out('knows').next()", g
     .V('1')
     .out('knows', 'created')
     .next());
-console.log("g.V('1').outE().next()", g
-    .V('1')
-    .outE()
-    .next());
-console.log("g.V('3').in().next()", g
-    .V('3')
-    .in()
-    .next());
-console.log("g.V('3').in('knows').next()", g
-    .V('3')
-    .in('knows')
-    .next());
-console.log("g.V('3').in('knows').next()", g
-    .V('3')
-    .in('knows', 'created')
-    .next());
-console.log("g.V('3').inE().next()", g
-    .V('3')
-    .inE()
-    .next());
 /*const marko = g.addV('person').property('name', 'marko').property('age',29).next();
 const lop = g.addV("software").property('name','lop').property('lang', 'java').next();
 g.addE("created").from(marko).to(lop).property('weight', 0.6).iterate();*/
