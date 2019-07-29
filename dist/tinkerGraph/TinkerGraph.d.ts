@@ -1,3 +1,4 @@
+import VirtualGraph from '../virtualGraph/VirtualGraph';
 export interface VertexData {
     name: string;
     _id: string;
@@ -28,14 +29,6 @@ export interface VirtualEdge {
     _outV: VirtualVertex;
     _inV: VirtualVertex;
     _label: string;
-}
-export interface VirtualGraph {
-    vertices: {
-        [_id: string]: VirtualVertex;
-    };
-    edges: {
-        [_id: string]: VirtualEdge;
-    };
 }
 /**
  * The static TinkerGraph class is mainly responsble for reading in a json file

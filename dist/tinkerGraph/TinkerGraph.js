@@ -11,11 +11,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var defaultGraph = {
-    mode: 'NORMAL',
-    vertices: [],
-    edges: [],
-};
+var VirtualGraph_1 = require("../virtualGraph/VirtualGraph");
 /**
  * The static TinkerGraph class is mainly responsble for reading in a json file
  * written in the GraphSON format. Currently, it only accept preloaded objects,
@@ -23,22 +19,20 @@ var defaultGraph = {
  */
 var TinkerGraph = {
     open: function (graphData) {
-        var virtualGraph = {
-            vertices: {},
-            edges: {},
-        };
+        var virtualVertices = {};
         var vertices = graphData.vertices, edges = graphData.edges;
         vertices.forEach(function (vertexData) {
             var virtualVertex = Object.assign({}, __assign({}, vertexData, { _outE: [], _inE: [] }));
-            virtualGraph.vertices[virtualVertex._id] = virtualVertex;
+            virtualVertices[virtualVertex._id] = virtualVertex;
         });
+        var virtualEdges = {};
         edges.forEach(function (edgeData) {
-            var virtualEdge = Object.assign({}, __assign({}, edgeData, { _outV: virtualGraph.vertices[edgeData._outV], _inV: virtualGraph.vertices[edgeData._inV] }));
+            var virtualEdge = Object.assign({}, __assign({}, edgeData, { _outV: virtualVertices[edgeData._outV], _inV: virtualVertices[edgeData._inV] }));
             virtualEdge._outV._outE.push(virtualEdge);
             virtualEdge._inV._inE.push(virtualEdge);
-            virtualGraph.edges[virtualEdge._id] = virtualEdge;
+            virtualEdges[virtualEdge._id] = virtualEdge;
         });
-        return virtualGraph;
+        return new VirtualGraph_1.default(virtualVertices, virtualEdges);
     },
 };
 exports.default = TinkerGraph;

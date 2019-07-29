@@ -1,4 +1,6 @@
 import Graph from '../graph/Graph';
+import Traversal from '../traversal/Traversal';
+import VirtualGraph from '../virtualGraph/VirtualGraph';
 
 export interface VertexData {
   name: string;
@@ -36,17 +38,6 @@ export interface VirtualEdge {
   _label: string;
 }
 
-export interface VirtualGraph {
-  vertices: { [_id: string]: VirtualVertex };
-  edges: { [_id: string]: VirtualEdge };
-}
-
-const defaultGraph = {
-  mode: 'NORMAL',
-  vertices: [],
-  edges: [],
-};
-
 /**
  * The static TinkerGraph class is mainly responsble for reading in a json file
  * written in the GraphSON format. Currently, it only accept preloaded objects,
@@ -54,10 +45,7 @@ const defaultGraph = {
  */
 const TinkerGraph = {
   open: (graphData: GraphData): VirtualGraph => {
-    const virtualGraph: VirtualGraph = {
-      vertices: {},
-      edges: {},
-    };
+    const virtualVertices: { [_id: string]: VirtualVertex } = {};
     const { vertices, edges } = graphData;
     vertices.forEach(vertexData => {
       const virtualVertex: VirtualVertex = Object.assign(
@@ -68,22 +56,23 @@ const TinkerGraph = {
           _inE: [],
         }
       );
-      virtualGraph.vertices[virtualVertex._id] = virtualVertex;
+      virtualVertices[virtualVertex._id] = virtualVertex;
     });
+    const virtualEdges: { [_id: string]: VirtualEdge } = {};
     edges.forEach(edgeData => {
       const virtualEdge: VirtualEdge = Object.assign(
         {},
         {
           ...edgeData,
-          _outV: virtualGraph.vertices[edgeData._outV],
-          _inV: virtualGraph.vertices[edgeData._inV],
+          _outV: virtualVertices[edgeData._outV],
+          _inV: virtualVertices[edgeData._inV],
         }
       );
       virtualEdge._outV._outE.push(virtualEdge);
       virtualEdge._inV._inE.push(virtualEdge);
-      virtualGraph.edges[virtualEdge._id] = virtualEdge;
+      virtualEdges[virtualEdge._id] = virtualEdge;
     });
-    return virtualGraph;
+    return new VirtualGraph(virtualVertices, virtualEdges);
   },
 };
 

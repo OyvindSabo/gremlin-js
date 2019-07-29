@@ -1,5 +1,6 @@
-import Collection from '../collection/Collection';
-import { GraphData } from '../tinkerGraph/TinkerGraph';
+import VirtualGraph from '../virtualGraph/VirtualGraph';
+import TraversalItem from '../traversalItem/TraversalItem';
+import TraversalStep from '../traversalStep/TraversalStep';
 
 /**
  * The traversal, typically assigned to the variable g.
@@ -7,11 +8,11 @@ import { GraphData } from '../tinkerGraph/TinkerGraph';
  * const g = graph.Traversal()
  */
 export default class Traversal {
-  graphData: GraphData;
-  traversal: Collection[];
-  constructor(graphData: GraphData) {
-    this.graphData = graphData;
-    this.traversal = [];
+  virtualGraph: VirtualGraph;
+  currentTraversalItemCollection: TraversalItem[];
+  constructor(virtualGraph: VirtualGraph) {
+    this.virtualGraph = virtualGraph;
+    this.currentTraversalItemCollection = [];
   }
   addE() {}
   addV() {}
@@ -23,12 +24,15 @@ export default class Traversal {
    * a collection of all the nodes in the graph will be returned.
    */
   E(...edgeIds: string[]) {
-    const collectionData = edgeIds.length
-      ? this.graphData.edges.filter(edge => edgeIds.includes(edge._id))
-      : this.graphData.edges;
-    const collection = new Collection(this, collectionData);
-    this.traversal.push(collection);
-    return collection;
+    const virtualEdges = Object.values(this.virtualGraph.edges);
+    const newCollectionData = edgeIds.length
+      ? virtualEdges.filter(edge => edgeIds.includes(edge._id))
+      : virtualEdges;
+    const newTraversalItemCollection = newCollectionData.map(
+      virtualEdge => new TraversalItem(virtualEdge)
+    );
+    this.currentTraversalItemCollection = newTraversalItemCollection;
+    return new TraversalStep(this, newTraversalItemCollection);
   }
   /**
    * Returns a collection of nodes and sets itself as the traversal
@@ -37,12 +41,14 @@ export default class Traversal {
    * a collection of all the nodes in the graph will be returned.
    */
   V(...vertexIds: string[]) {
-    const allVertices = this.graphData.vertices;
+    const virtualVertices = Object.values(this.virtualGraph.vertices);
     const newCollectionData = vertexIds.length
-      ? allVertices.filter(vertice => vertexIds.includes(vertice._id))
-      : allVertices;
-    const newCollection = new Collection(this, newCollectionData);
-    this.traversal.push(newCollection);
-    return newCollection;
+      ? virtualVertices.filter(edge => vertexIds.includes(edge._id))
+      : virtualVertices;
+    const newTraversalItemCollection = newCollectionData.map(
+      virtualEdge => new TraversalItem(virtualEdge)
+    );
+    this.currentTraversalItemCollection = newTraversalItemCollection;
+    return new TraversalStep(this, newTraversalItemCollection);
   }
 }
