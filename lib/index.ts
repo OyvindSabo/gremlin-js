@@ -1,4 +1,5 @@
 import Traversal from './traversal/Traversal';
+import TinkerGraph from './tinkerGraph/TinkerGraph';
 
 /**
  * In gremlin-js we store graphs using the GraphSON format documented here:
@@ -99,32 +100,13 @@ const graphData = {
 /*const graph = TinkerGraph.open();
 const g = graph.traversal();*/
 // Assuming I already have graphData stored in local memory
-const g = new Traversal(graphData);
+const graph = TinkerGraph.open(graphData);
+console.log('graph: ', graph);
+/*const g = new Traversal(graphData);
 console.log(`g.V('1').next() ==>`, g.V('1').next());
 console.log(`g.V().next() ==>`, g.V().next());
 console.log(`g.E('10').next() ==>`, g.E('10').next());
-console.log(`g.E().next() ==>`, g.E().next());
-console.log(
-  `g.V('1').out().next()`,
-  g
-    .V('1')
-    .out()
-    .next()
-);
-console.log(
-  `g.V('1').out('knows').next()`,
-  g
-    .V('1')
-    .out('knows')
-    .next()
-);
-console.log(
-  `g.V('1').out('knows').next()`,
-  g
-    .V('1')
-    .out('knows', 'created')
-    .next()
-);
+console.log(`g.E().next() ==>`, g.E().next());*/
 
 /*const marko = g.addV('person').property('name', 'marko').property('age',29).next();
 const lop = g.addV("software").property('name','lop').property('lang', 'java').next();

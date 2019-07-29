@@ -1,3 +1,3 @@
-import { EdgeData, VerticeData } from '../tinkerGraph/TinkerGraph';
+import { EdgeData, VertexData } from '../tinkerGraph/TinkerGraph';
 
-export type CollectionData = (VerticeData | EdgeData)[];
+export type CollectionData = (VertexData | EdgeData)[];

@@ -6,11 +6,11 @@ import { _inE } from './inE/inE';
 import { _out } from './out/out';
 import { _outE } from './outE/outE';
 import { CollectionData } from './types';
-import { VerticeData, EdgeData } from '../tinkerGraph/TinkerGraph';
+import { VertexData, EdgeData } from '../tinkerGraph/TinkerGraph';
 
 export default class Collection {
   traversal: Traversal;
-  collectionData: (VerticeData | EdgeData)[];
+  collectionData: (VertexData | EdgeData)[];
   constructor(traversal: Traversal, collectionData: CollectionData) {
     /**
      * this.traversal is a reference to the traversal which stores the path of

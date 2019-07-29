@@ -1,9 +1,9 @@
 import Traversal from '../traversal/Traversal';
 import { CollectionData } from './types';
-import { VerticeData, EdgeData } from '../tinkerGraph/TinkerGraph';
+import { VertexData, EdgeData } from '../tinkerGraph/TinkerGraph';
 export default class Collection {
     traversal: Traversal;
-    collectionData: (VerticeData | EdgeData)[];
+    collectionData: (VertexData | EdgeData)[];
     constructor(traversal: Traversal, collectionData: CollectionData);
     and(): void;
     as(): void;
@@ -32,7 +32,7 @@ export default class Collection {
      * Next i used to terminate a query, i.e. to output the part of the graph
      * corresponding to the current collection instance.
      */
-    next(): (VerticeData | EdgeData)[];
+    next(): (VertexData | EdgeData)[];
     not(): void;
     /**
      * Only used together with branch.

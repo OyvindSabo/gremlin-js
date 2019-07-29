@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var Traversal_1 = require("./traversal/Traversal");
+var TinkerGraph_1 = require("./tinkerGraph/TinkerGraph");
 /**
  * In gremlin-js we store graphs using the GraphSON format documented here:
  * https://github.com/tinkerpop/blueprints/wiki/GraphSON-Reader-and-Writer-Library
@@ -99,23 +99,13 @@ var graphData = {
 /*const graph = TinkerGraph.open();
 const g = graph.traversal();*/
 // Assuming I already have graphData stored in local memory
-var g = new Traversal_1.default(graphData);
-console.log("g.V('1').next() ==>", g.V('1').next());
-console.log("g.V().next() ==>", g.V().next());
-console.log("g.E('10').next() ==>", g.E('10').next());
-console.log("g.E().next() ==>", g.E().next());
-console.log("g.V('1').out().next()", g
-    .V('1')
-    .out()
-    .next());
-console.log("g.V('1').out('knows').next()", g
-    .V('1')
-    .out('knows')
-    .next());
-console.log("g.V('1').out('knows').next()", g
-    .V('1')
-    .out('knows', 'created')
-    .next());
+var graph = TinkerGraph_1.default.open(graphData);
+console.log('graph: ', graph);
+/*const g = new Traversal(graphData);
+console.log(`g.V('1').next() ==>`, g.V('1').next());
+console.log(`g.V().next() ==>`, g.V().next());
+console.log(`g.E('10').next() ==>`, g.E('10').next());
+console.log(`g.E().next() ==>`, g.E().next());*/
 /*const marko = g.addV('person').property('name', 'marko').property('age',29).next();
 const lop = g.addV("software").property('name','lop').property('lang', 'java').next();
 g.addE("created").from(marko).to(lop).property('weight', 0.6).iterate();*/

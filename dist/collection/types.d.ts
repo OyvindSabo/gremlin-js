@@ -1,2 +1,2 @@
-import { EdgeData, VerticeData } from '../tinkerGraph/TinkerGraph';
-export declare type CollectionData = (VerticeData | EdgeData)[];
+import { EdgeData, VertexData } from '../tinkerGraph/TinkerGraph';
+export declare type CollectionData = (VertexData | EdgeData)[];
