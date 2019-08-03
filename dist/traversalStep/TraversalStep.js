@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var both_1 = require("./both/both");
 var bothE_1 = require("./bothE/bothE");
+var bothV_1 = require("./bothV/bothV");
 var outE_1 = require("./outE/outE");
 var out_1 = require("./out/out");
 var inE_1 = require("./inE/inE");
@@ -32,6 +33,11 @@ var TraversalStep = /** @class */ (function () {
             edgeTypes[_i] = arguments[_i];
         }
         var newTraversalItemCollection = bothE_1._bothE.apply(void 0, [this].concat(edgeTypes));
+        this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
+        return new TraversalStep(this._traversal, newTraversalItemCollection);
+    };
+    TraversalStep.prototype.bothV = function () {
+        var newTraversalItemCollection = bothV_1._bothV(this);
         this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
         return new TraversalStep(this._traversal, newTraversalItemCollection);
     };

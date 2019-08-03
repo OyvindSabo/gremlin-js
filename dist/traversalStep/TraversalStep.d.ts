@@ -8,6 +8,7 @@ export default class TraversalStep {
     as(): void;
     both(...edgeTypes: string[]): TraversalStep;
     bothE(...edgeTypes: string[]): TraversalStep;
+    bothV(): TraversalStep;
     branch(): void;
     /**
      * Basically a ternary operator

@@ -1,8 +1,8 @@
 import Traversal from '../traversal/Traversal';
-import { VirtualVertex } from '../tinkerGraph/TinkerGraph';
 import TraversalItem from '../traversalItem/TraversalItem';
 import { _both } from './both/both';
 import { _bothE } from './bothE/bothE';
+import { _bothV } from './bothV/bothV';
 import { _outE } from './outE/outE';
 import { _out } from './out/out';
 import { _inE } from './inE/inE';
@@ -28,6 +28,11 @@ export default class TraversalStep {
   }
   bothE(...edgeTypes: string[]) {
     const newTraversalItemCollection = _bothE(this, ...edgeTypes);
+    this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
+    return new TraversalStep(this._traversal, newTraversalItemCollection);
+  }
+  bothV() {
+    const newTraversalItemCollection = _bothV(this);
     this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
     return new TraversalStep(this._traversal, newTraversalItemCollection);
   }
