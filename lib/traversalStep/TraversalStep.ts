@@ -3,6 +3,8 @@ import { VirtualVertex } from '../tinkerGraph/TinkerGraph';
 import TraversalItem from '../traversalItem/TraversalItem';
 import { _both } from './both/both';
 import { _bothE } from './bothE/bothE';
+import { _outE } from './outE/outE';
+import { _out } from './out/out';
 
 export default class TraversalStep {
   _traversal: Traversal;
@@ -103,37 +105,12 @@ export default class TraversalStep {
    * label of the edges to follow.
    */
   out(...edgeTypes: string[]) {
-    const unflatNewTraversalItemCollection = this._traversalItemCollection
-      .filter(traversalItem => traversalItem.traversalItem._type === 'vertex')
-      .map(traversalItem =>
-        (traversalItem.traversalItem as VirtualVertex)._outE
-          .filter(virtualEdge =>
-            edgeTypes.length ? edgeTypes.includes(virtualEdge._label) : true
-          )
-          .map(virtualEdge => virtualEdge._inV)
-          .map(virtualVertex => new TraversalItem(virtualVertex, traversalItem))
-      );
-    const newTraversalItemCollection = ([] as TraversalItem[]).concat(
-      ...unflatNewTraversalItemCollection
-    );
-
+    const newTraversalItemCollection = _out(this, ...edgeTypes);
     this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
     return new TraversalStep(this._traversal, newTraversalItemCollection);
   }
   outE(...edgeTypes: string[]) {
-    const unflatNewTraversalItemCollection = this._traversalItemCollection
-      .filter(traversalItem => traversalItem.traversalItem._type === 'vertex')
-      .map(traversalItem =>
-        (traversalItem.traversalItem as VirtualVertex)._outE
-          .filter(virtualEdge =>
-            edgeTypes.length ? edgeTypes.includes(virtualEdge._label) : true
-          )
-          .map(virtualEdge => new TraversalItem(virtualEdge, traversalItem))
-      );
-    const newTraversalItemCollection = ([] as TraversalItem[]).concat(
-      ...unflatNewTraversalItemCollection
-    );
-
+    const newTraversalItemCollection = _outE(this, ...edgeTypes);
     this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
     return new TraversalStep(this._traversal, newTraversalItemCollection);
   }
