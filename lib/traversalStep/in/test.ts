@@ -1,6 +1,5 @@
 import test from 'ava';
-import { CollectionData } from '../types';
-import TinkerGraph from '../../tinkerGraph/TinkerGraph';
+import TinkerGraph, { VertexData } from '../../tinkerGraph/TinkerGraph';
 
 const graphData = {
   mode: 'NORMAL',
@@ -152,7 +151,7 @@ test('Get all vertices reached through incoming edges of a nonexistent type', t 
     .V()
     .in('uses')
     .next();
-  const expectedResult: CollectionData = [];
+  const expectedResult: VertexData[] = [];
   t.deepEqual(actualResult, expectedResult);
 });
 
