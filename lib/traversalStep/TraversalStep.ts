@@ -2,6 +2,7 @@ import Traversal from '../traversal/Traversal';
 import { VirtualVertex } from '../tinkerGraph/TinkerGraph';
 import TraversalItem from '../traversalItem/TraversalItem';
 import { _both } from './both/both';
+import { _bothE } from './bothE/bothE';
 
 export default class TraversalStep {
   _traversal: Traversal;
@@ -22,27 +23,7 @@ export default class TraversalStep {
     return new TraversalStep(this._traversal, newTraversalItemCollection);
   }
   bothE(...edgeTypes: string[]) {
-    const unflatNewTraversalItemCollection = this._traversalItemCollection
-      .filter(traversalItem => traversalItem.traversalItem._type === 'vertex')
-      .map(traversalItem => {
-        const outVertices = (traversalItem.traversalItem as VirtualVertex)._outE
-          .filter(virtualEdge =>
-            edgeTypes.length ? edgeTypes.includes(virtualEdge._label) : true
-          )
-          .map(virtualEdge => new TraversalItem(virtualEdge, traversalItem));
-
-        const inVertices = (traversalItem.traversalItem as VirtualVertex)._inE
-          .filter(virtualEdge =>
-            edgeTypes.length ? edgeTypes.includes(virtualEdge._label) : true
-          )
-          .map(virtualEdge => new TraversalItem(virtualEdge, traversalItem));
-
-        return [...outVertices, ...inVertices];
-      });
-    const newTraversalItemCollection = ([] as TraversalItem[]).concat(
-      ...unflatNewTraversalItemCollection
-    );
-
+    const newTraversalItemCollection = _bothE(this, ...edgeTypes);
     this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
     return new TraversalStep(this._traversal, newTraversalItemCollection);
   }

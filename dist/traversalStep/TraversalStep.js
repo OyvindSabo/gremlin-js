@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var TraversalItem_1 = require("../traversalItem/TraversalItem");
 var both_1 = require("./both/both");
+var bothE_1 = require("./bothE/bothE");
 var TraversalStep = /** @class */ (function () {
     function TraversalStep(traversal, traversalItemCollection) {
         /**
@@ -23,27 +24,11 @@ var TraversalStep = /** @class */ (function () {
         return new TraversalStep(this._traversal, newTraversalItemCollection);
     };
     TraversalStep.prototype.bothE = function () {
-        var _a;
         var edgeTypes = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             edgeTypes[_i] = arguments[_i];
         }
-        var unflatNewTraversalItemCollection = this._traversalItemCollection
-            .filter(function (traversalItem) { return traversalItem.traversalItem._type === 'vertex'; })
-            .map(function (traversalItem) {
-            var outVertices = traversalItem.traversalItem._outE
-                .filter(function (virtualEdge) {
-                return edgeTypes.length ? edgeTypes.includes(virtualEdge._label) : true;
-            })
-                .map(function (virtualEdge) { return new TraversalItem_1.default(virtualEdge, traversalItem); });
-            var inVertices = traversalItem.traversalItem._inE
-                .filter(function (virtualEdge) {
-                return edgeTypes.length ? edgeTypes.includes(virtualEdge._label) : true;
-            })
-                .map(function (virtualEdge) { return new TraversalItem_1.default(virtualEdge, traversalItem); });
-            return outVertices.concat(inVertices);
-        });
-        var newTraversalItemCollection = (_a = []).concat.apply(_a, unflatNewTraversalItemCollection);
+        var newTraversalItemCollection = bothE_1._bothE.apply(void 0, [this].concat(edgeTypes));
         this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
         return new TraversalStep(this._traversal, newTraversalItemCollection);
     };

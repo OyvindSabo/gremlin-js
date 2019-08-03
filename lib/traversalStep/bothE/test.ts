@@ -1,7 +1,5 @@
 import test from 'ava';
-import Traversal from '../../traversal/Traversal';
-import { CollectionData } from '../types';
-import TinkerGraph from '../../tinkerGraph/TinkerGraph';
+import TinkerGraph, { EdgeData } from '../../tinkerGraph/TinkerGraph';
 
 const graphData = {
   mode: 'NORMAL',
@@ -163,7 +161,7 @@ test('Get all outgoing or incoming edges of a nonexistent type', t => {
     .V()
     .bothE('uses')
     .next();
-  const expectedResult: CollectionData = [];
+  const expectedResult: EdgeData[] = [];
   t.deepEqual(actualResult, expectedResult);
 });
 
