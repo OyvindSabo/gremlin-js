@@ -1,8 +1,8 @@
 import Traversal from '../traversal/Traversal';
 import TraversalItem from '../traversalItem/TraversalItem';
 export default class TraversalStep {
-    traversal: Traversal;
-    traversalItemCollection: TraversalItem[];
+    _traversal: Traversal;
+    _traversalItemCollection: TraversalItem[];
     constructor(traversal: Traversal, traversalItemCollection: TraversalItem[]);
     and(): void;
     as(): void;

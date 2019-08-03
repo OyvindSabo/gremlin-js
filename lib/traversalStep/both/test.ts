@@ -1,6 +1,8 @@
 import test from 'ava';
-import { CollectionData } from '../types';
-import TinkerGraph from '../../tinkerGraph/TinkerGraph';
+import TinkerGraph, {
+  VirtualVertex,
+  VertexData,
+} from '../../tinkerGraph/TinkerGraph';
 
 const graphData = {
   mode: 'NORMAL',
@@ -152,7 +154,7 @@ test('Get all vertices reached through outgoing or incoming edges of a nonexiste
     .V()
     .both('uses')
     .next();
-  const expectedResult: CollectionData = [];
+  const expectedResult: VertexData[] = [];
   t.deepEqual(actualResult, expectedResult);
 });
 

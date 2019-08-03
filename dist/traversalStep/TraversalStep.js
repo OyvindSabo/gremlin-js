@@ -1,43 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var TraversalItem_1 = require("../traversalItem/TraversalItem");
+var both_1 = require("./both/both");
 var TraversalStep = /** @class */ (function () {
     function TraversalStep(traversal, traversalItemCollection) {
         /**
          * this.traversal is a reference to the traversal which stores the path of
          * which this collection is a step
          */
-        this.traversal = traversal;
-        this.traversalItemCollection = traversalItemCollection;
+        this._traversal = traversal;
+        this._traversalItemCollection = traversalItemCollection;
     }
     TraversalStep.prototype.and = function () { };
     TraversalStep.prototype.as = function () { };
     TraversalStep.prototype.both = function () {
-        var _a;
         var edgeTypes = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             edgeTypes[_i] = arguments[_i];
         }
-        var unflatNewTraversalItemCollection = this.traversalItemCollection
-            .filter(function (traversalItem) { return traversalItem.traversalItem._type === 'vertex'; })
-            .map(function (traversalItem) {
-            var outVertices = traversalItem.traversalItem._outE
-                .filter(function (virtualEdge) {
-                return edgeTypes.length ? edgeTypes.includes(virtualEdge._label) : true;
-            })
-                .map(function (virtualEdge) { return virtualEdge._inV; })
-                .map(function (virtualVertex) { return new TraversalItem_1.default(virtualVertex, traversalItem); });
-            var inVertices = traversalItem.traversalItem._inE
-                .filter(function (virtualEdge) {
-                return edgeTypes.length ? edgeTypes.includes(virtualEdge._label) : true;
-            })
-                .map(function (virtualEdge) { return virtualEdge._outV; })
-                .map(function (virtualVertex) { return new TraversalItem_1.default(virtualVertex, traversalItem); });
-            return outVertices.concat(inVertices);
-        });
-        var newTraversalItemCollection = (_a = []).concat.apply(_a, unflatNewTraversalItemCollection);
-        this.traversal.currentTraversalItemCollection = newTraversalItemCollection;
-        return new TraversalStep(this.traversal, newTraversalItemCollection);
+        var newTraversalItemCollection = both_1._both.apply(void 0, [this].concat(edgeTypes));
+        this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
+        return new TraversalStep(this._traversal, newTraversalItemCollection);
     };
     TraversalStep.prototype.bothE = function () {
         var _a;
@@ -45,7 +28,7 @@ var TraversalStep = /** @class */ (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             edgeTypes[_i] = arguments[_i];
         }
-        var unflatNewTraversalItemCollection = this.traversalItemCollection
+        var unflatNewTraversalItemCollection = this._traversalItemCollection
             .filter(function (traversalItem) { return traversalItem.traversalItem._type === 'vertex'; })
             .map(function (traversalItem) {
             var outVertices = traversalItem.traversalItem._outE
@@ -61,8 +44,8 @@ var TraversalStep = /** @class */ (function () {
             return outVertices.concat(inVertices);
         });
         var newTraversalItemCollection = (_a = []).concat.apply(_a, unflatNewTraversalItemCollection);
-        this.traversal.currentTraversalItemCollection = newTraversalItemCollection;
-        return new TraversalStep(this.traversal, newTraversalItemCollection);
+        this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
+        return new TraversalStep(this._traversal, newTraversalItemCollection);
     };
     TraversalStep.prototype.branch = function () { };
     /**
@@ -85,7 +68,7 @@ var TraversalStep = /** @class */ (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             edgeTypes[_i] = arguments[_i];
         }
-        var unflatNewTraversalItemCollection = this.traversalItemCollection
+        var unflatNewTraversalItemCollection = this._traversalItemCollection
             .filter(function (traversalItem) { return traversalItem.traversalItem._type === 'vertex'; })
             .map(function (traversalItem) {
             return traversalItem.traversalItem._inE
@@ -96,8 +79,8 @@ var TraversalStep = /** @class */ (function () {
                 .map(function (virtualVertex) { return new TraversalItem_1.default(virtualVertex, traversalItem); });
         });
         var newTraversalItemCollection = (_a = []).concat.apply(_a, unflatNewTraversalItemCollection);
-        this.traversal.currentTraversalItemCollection = newTraversalItemCollection;
-        return new TraversalStep(this.traversal, newTraversalItemCollection);
+        this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
+        return new TraversalStep(this._traversal, newTraversalItemCollection);
     };
     TraversalStep.prototype.inE = function () {
         var _a;
@@ -105,7 +88,7 @@ var TraversalStep = /** @class */ (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             edgeTypes[_i] = arguments[_i];
         }
-        var unflatNewTraversalItemCollection = this.traversalItemCollection
+        var unflatNewTraversalItemCollection = this._traversalItemCollection
             .filter(function (traversalItem) { return traversalItem.traversalItem._type === 'vertex'; })
             .map(function (traversalItem) {
             return traversalItem.traversalItem._inE
@@ -115,8 +98,8 @@ var TraversalStep = /** @class */ (function () {
                 .map(function (virtualEdge) { return new TraversalItem_1.default(virtualEdge, traversalItem); });
         });
         var newTraversalItemCollection = (_a = []).concat.apply(_a, unflatNewTraversalItemCollection);
-        this.traversal.currentTraversalItemCollection = newTraversalItemCollection;
-        return new TraversalStep(this.traversal, newTraversalItemCollection);
+        this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
+        return new TraversalStep(this._traversal, newTraversalItemCollection);
     };
     TraversalStep.prototype.label = function () { };
     TraversalStep.prototype.map = function () { };
@@ -125,7 +108,7 @@ var TraversalStep = /** @class */ (function () {
      * corresponding to the current collection instance.
      */
     TraversalStep.prototype.next = function () {
-        return this.traversalItemCollection.map(function (traversalItem) { return traversalItem.traversalItem._origin; });
+        return this._traversalItemCollection.map(function (traversalItem) { return traversalItem.traversalItem._origin; });
     };
     TraversalStep.prototype.not = function () { };
     /**
@@ -147,7 +130,7 @@ var TraversalStep = /** @class */ (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             edgeTypes[_i] = arguments[_i];
         }
-        var unflatNewTraversalItemCollection = this.traversalItemCollection
+        var unflatNewTraversalItemCollection = this._traversalItemCollection
             .filter(function (traversalItem) { return traversalItem.traversalItem._type === 'vertex'; })
             .map(function (traversalItem) {
             return traversalItem.traversalItem._outE
@@ -158,8 +141,8 @@ var TraversalStep = /** @class */ (function () {
                 .map(function (virtualVertex) { return new TraversalItem_1.default(virtualVertex, traversalItem); });
         });
         var newTraversalItemCollection = (_a = []).concat.apply(_a, unflatNewTraversalItemCollection);
-        this.traversal.currentTraversalItemCollection = newTraversalItemCollection;
-        return new TraversalStep(this.traversal, newTraversalItemCollection);
+        this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
+        return new TraversalStep(this._traversal, newTraversalItemCollection);
     };
     TraversalStep.prototype.outE = function () {
         var _a;
@@ -167,7 +150,7 @@ var TraversalStep = /** @class */ (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             edgeTypes[_i] = arguments[_i];
         }
-        var unflatNewTraversalItemCollection = this.traversalItemCollection
+        var unflatNewTraversalItemCollection = this._traversalItemCollection
             .filter(function (traversalItem) { return traversalItem.traversalItem._type === 'vertex'; })
             .map(function (traversalItem) {
             return traversalItem.traversalItem._outE
@@ -177,8 +160,8 @@ var TraversalStep = /** @class */ (function () {
                 .map(function (virtualEdge) { return new TraversalItem_1.default(virtualEdge, traversalItem); });
         });
         var newTraversalItemCollection = (_a = []).concat.apply(_a, unflatNewTraversalItemCollection);
-        this.traversal.currentTraversalItemCollection = newTraversalItemCollection;
-        return new TraversalStep(this.traversal, newTraversalItemCollection);
+        this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
+        return new TraversalStep(this._traversal, newTraversalItemCollection);
     };
     TraversalStep.prototype.path = function () { };
     TraversalStep.prototype.repeat = function () { };
