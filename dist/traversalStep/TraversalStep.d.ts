@@ -41,7 +41,7 @@ export default class TraversalStep {
      *      .option(none, values('name'))
      */
     option(): void;
-    otherV(): void;
+    otherV(): TraversalStep;
     /**
      * Returns a collection of all nodes reached by following outward edges.
      * An arbitrary amount of string arguments can be supplied to specify the

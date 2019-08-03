@@ -100,7 +100,10 @@ var graphData = {
 // Assuming I already have graphData stored in local memory
 var graph = TinkerGraph_1.default.open(graphData);
 var g = graph.traversal();
-var result = g.E('knows').next();
+var result = g
+    .V()
+    .in()
+    .next();
 /*  .bothV()
   .next();*/
 console.log('result: ', result);

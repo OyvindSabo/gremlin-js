@@ -7,6 +7,7 @@ var outE_1 = require("./outE/outE");
 var out_1 = require("./out/out");
 var inE_1 = require("./inE/inE");
 var in_1 = require("./in/in");
+var otherV_1 = require("./otherV/otherV");
 var TraversalStep = /** @class */ (function () {
     function TraversalStep(traversal, traversalItemCollection) {
         /**
@@ -91,7 +92,11 @@ var TraversalStep = /** @class */ (function () {
      *      .option(none, values('name'))
      */
     TraversalStep.prototype.option = function () { };
-    TraversalStep.prototype.otherV = function () { };
+    TraversalStep.prototype.otherV = function () {
+        var newTraversalItemCollection = otherV_1._otherV(this);
+        this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
+        return new TraversalStep(this._traversal, newTraversalItemCollection);
+    };
     /**
      * Returns a collection of all nodes reached by following outward edges.
      * An arbitrary amount of string arguments can be supplied to specify the

@@ -7,6 +7,7 @@ import { _outE } from './outE/outE';
 import { _out } from './out/out';
 import { _inE } from './inE/inE';
 import { _in } from './in/in';
+import { _otherV } from './otherV/otherV';
 
 export default class TraversalStep {
   _traversal: Traversal;
@@ -80,7 +81,11 @@ export default class TraversalStep {
    *      .option(none, values('name'))
    */
   option() {}
-  otherV() {}
+  otherV() {
+    const newTraversalItemCollection = _otherV(this);
+    this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
+    return new TraversalStep(this._traversal, newTraversalItemCollection);
+  }
   /**
    * Returns a collection of all nodes reached by following outward edges.
    * An arbitrary amount of string arguments can be supplied to specify the
