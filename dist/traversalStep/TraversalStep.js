@@ -5,6 +5,7 @@ var both_1 = require("./both/both");
 var bothE_1 = require("./bothE/bothE");
 var outE_1 = require("./outE/outE");
 var out_1 = require("./out/out");
+var inE_1 = require("./inE/inE");
 var TraversalStep = /** @class */ (function () {
     function TraversalStep(traversal, traversalItemCollection) {
         /**
@@ -70,21 +71,11 @@ var TraversalStep = /** @class */ (function () {
         return new TraversalStep(this._traversal, newTraversalItemCollection);
     };
     TraversalStep.prototype.inE = function () {
-        var _a;
         var edgeTypes = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             edgeTypes[_i] = arguments[_i];
         }
-        var unflatNewTraversalItemCollection = this._traversalItemCollection
-            .filter(function (traversalItem) { return traversalItem.traversalItem._type === 'vertex'; })
-            .map(function (traversalItem) {
-            return traversalItem.traversalItem._inE
-                .filter(function (virtualEdge) {
-                return edgeTypes.length ? edgeTypes.includes(virtualEdge._label) : true;
-            })
-                .map(function (virtualEdge) { return new TraversalItem_1.default(virtualEdge, traversalItem); });
-        });
-        var newTraversalItemCollection = (_a = []).concat.apply(_a, unflatNewTraversalItemCollection);
+        var newTraversalItemCollection = inE_1._inE.apply(void 0, [this].concat(edgeTypes));
         this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
         return new TraversalStep(this._traversal, newTraversalItemCollection);
     };

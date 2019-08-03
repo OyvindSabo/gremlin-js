@@ -5,6 +5,7 @@ import { _both } from './both/both';
 import { _bothE } from './bothE/bothE';
 import { _outE } from './outE/outE';
 import { _out } from './out/out';
+import { _inE } from './inE/inE';
 
 export default class TraversalStep {
   _traversal: Traversal;
@@ -63,19 +64,7 @@ export default class TraversalStep {
     return new TraversalStep(this._traversal, newTraversalItemCollection);
   }
   inE(...edgeTypes: string[]) {
-    const unflatNewTraversalItemCollection = this._traversalItemCollection
-      .filter(traversalItem => traversalItem.traversalItem._type === 'vertex')
-      .map(traversalItem =>
-        (traversalItem.traversalItem as VirtualVertex)._inE
-          .filter(virtualEdge =>
-            edgeTypes.length ? edgeTypes.includes(virtualEdge._label) : true
-          )
-          .map(virtualEdge => new TraversalItem(virtualEdge, traversalItem))
-      );
-    const newTraversalItemCollection = ([] as TraversalItem[]).concat(
-      ...unflatNewTraversalItemCollection
-    );
-
+    const newTraversalItemCollection = _inE(this, ...edgeTypes);
     this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
     return new TraversalStep(this._traversal, newTraversalItemCollection);
   }
