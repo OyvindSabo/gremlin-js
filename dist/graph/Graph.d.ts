@@ -1,4 +1,3 @@
-import Traversal from '../traversal/Traversal';
 import { GraphData } from '../tinkerGraph/TinkerGraph';
 /**
  * The Graph class is mainly responsble for storing graphData, from which new
@@ -7,6 +6,6 @@ import { GraphData } from '../tinkerGraph/TinkerGraph';
 export default class Graph {
     graphData: GraphData;
     constructor(graphData: GraphData);
-    traversal(): Traversal;
+    traversal(): any;
     close(): void;
 }

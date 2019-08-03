@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var ava_1 = require("ava");
-var Traversal_1 = require("../../traversal/Traversal");
+var TinkerGraph_1 = require("../../tinkerGraph/TinkerGraph");
 var graphData = {
     mode: 'NORMAL',
     vertices: [
@@ -93,7 +93,8 @@ var graphData = {
         },
     ],
 };
-var g = new Traversal_1.default(graphData);
+var graph = TinkerGraph_1.default.open(graphData);
+var g = graph.traversal();
 ava_1.default('Get all outgoing and incoming edges', function (t) {
     var actualResult = g
         .V('4')
@@ -109,20 +110,20 @@ ava_1.default('Get all outgoing and incoming edges', function (t) {
             _label: 'created',
         },
         {
-            weight: 1,
-            _id: '8',
-            _type: 'edge',
-            _outV: '1',
-            _inV: '4',
-            _label: 'knows',
-        },
-        {
             weight: 0.4000000059604645,
             _id: '11',
             _type: 'edge',
             _outV: '4',
             _inV: '3',
             _label: 'created',
+        },
+        {
+            weight: 1,
+            _id: '8',
+            _type: 'edge',
+            _outV: '1',
+            _inV: '4',
+            _label: 'knows',
         },
     ];
     t.deepEqual(actualResult, expectedResult);
@@ -175,20 +176,20 @@ ava_1.default('Get all  outgoing or incoming edges of any of multiple specified 
             _label: 'created',
         },
         {
-            weight: 1,
-            _id: '8',
-            _type: 'edge',
-            _outV: '1',
-            _inV: '4',
-            _label: 'knows',
-        },
-        {
             weight: 0.4000000059604645,
             _id: '11',
             _type: 'edge',
             _outV: '4',
             _inV: '3',
             _label: 'created',
+        },
+        {
+            weight: 1,
+            _id: '8',
+            _type: 'edge',
+            _outV: '1',
+            _inV: '4',
+            _label: 'knows',
         },
     ];
     t.deepEqual(actualResult, expectedResult);

@@ -1,6 +1,7 @@
 import test from 'ava';
 import Traversal from '../../traversal/Traversal';
 import { CollectionData } from '../types';
+import TinkerGraph from '../../tinkerGraph/TinkerGraph';
 
 const graphData = {
   mode: 'NORMAL',
@@ -94,7 +95,8 @@ const graphData = {
   ],
 };
 
-const g = new Traversal(graphData);
+const graph = TinkerGraph.open(graphData);
+const g = graph.traversal();
 
 test('Get all incoming edges', t => {
   const actualResult = g

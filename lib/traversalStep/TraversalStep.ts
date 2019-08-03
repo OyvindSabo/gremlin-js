@@ -1,14 +1,6 @@
 import Traversal from '../traversal/Traversal';
-import { _both } from './both/both';
-import { _bothE } from './bothE/bothE';
-import { _in } from './in/in';
-import { _inE } from './inE/inE';
-import { _out } from './out/out';
-import { _outE } from './outE/outE';
-import { CollectionData } from './types';
-import { VertexData, EdgeData } from '../tinkerGraph/TinkerGraph';
+import { VirtualVertex } from '../tinkerGraph/TinkerGraph';
 import TraversalItem from '../traversalItem/TraversalItem';
-import { timingSafeEqual } from 'crypto';
 
 export default class TraversalStep {
   traversal: Traversal;
@@ -24,14 +16,60 @@ export default class TraversalStep {
   and() {}
   as() {}
   both(...edgeTypes: string[]) {
-    const newCollection = _both(this, ...edgeTypes);
-    this.traversal.currentCollection = traversal.push(newCollection);
-    return newCollection;
+    const unflatNewTraversalItemCollection = this.traversalItemCollection
+      .filter(traversalItem => traversalItem.traversalItem._type === 'vertex')
+      .map(traversalItem => {
+        const outVertices = (traversalItem.traversalItem as VirtualVertex)._outE
+          .filter(virtualEdge =>
+            edgeTypes.length ? edgeTypes.includes(virtualEdge._label) : true
+          )
+          .map(virtualEdge => virtualEdge._inV)
+          .map(
+            virtualVertex => new TraversalItem(virtualVertex, traversalItem)
+          );
+
+        const inVertices = (traversalItem.traversalItem as VirtualVertex)._inE
+          .filter(virtualEdge =>
+            edgeTypes.length ? edgeTypes.includes(virtualEdge._label) : true
+          )
+          .map(virtualEdge => virtualEdge._outV)
+          .map(
+            virtualVertex => new TraversalItem(virtualVertex, traversalItem)
+          );
+
+        return [...outVertices, ...inVertices];
+      });
+    const newTraversalItemCollection = ([] as TraversalItem[]).concat(
+      ...unflatNewTraversalItemCollection
+    );
+
+    this.traversal.currentTraversalItemCollection = newTraversalItemCollection;
+    return new TraversalStep(this.traversal, newTraversalItemCollection);
   }
   bothE(...edgeTypes: string[]) {
-    const newCollection = _bothE(this, ...edgeTypes);
-    this.traversal.traversal.push(newCollection);
-    return newCollection;
+    const unflatNewTraversalItemCollection = this.traversalItemCollection
+      .filter(traversalItem => traversalItem.traversalItem._type === 'vertex')
+      .map(traversalItem => {
+        const outVertices = (traversalItem.traversalItem as VirtualVertex)._outE
+          .filter(virtualEdge =>
+            edgeTypes.length ? edgeTypes.includes(virtualEdge._label) : true
+          )
+          .map(virtualEdge => new TraversalItem(virtualEdge, traversalItem));
+
+        const inVertices = (traversalItem.traversalItem as VirtualVertex)._inE
+          .filter(virtualEdge =>
+            edgeTypes.length ? edgeTypes.includes(virtualEdge._label) : true
+          )
+          .map(virtualEdge => new TraversalItem(virtualEdge, traversalItem));
+
+        return [...outVertices, ...inVertices];
+      });
+    const newTraversalItemCollection = ([] as TraversalItem[]).concat(
+      ...unflatNewTraversalItemCollection
+    );
+
+    this.traversal.currentTraversalItemCollection = newTraversalItemCollection;
+    return new TraversalStep(this.traversal, newTraversalItemCollection);
   }
   branch() {}
   /**
@@ -49,14 +87,39 @@ export default class TraversalStep {
   has() {}
   hasLabel() {}
   in(...edgeTypes: string[]) {
-    const newCollection = _in(this, ...edgeTypes);
-    this.traversal.traversal.push(newCollection);
-    return newCollection;
+    const unflatNewTraversalItemCollection = this.traversalItemCollection
+      .filter(traversalItem => traversalItem.traversalItem._type === 'vertex')
+      .map(traversalItem =>
+        (traversalItem.traversalItem as VirtualVertex)._inE
+          .filter(virtualEdge =>
+            edgeTypes.length ? edgeTypes.includes(virtualEdge._label) : true
+          )
+          .map(virtualEdge => virtualEdge._outV)
+          .map(virtualVertex => new TraversalItem(virtualVertex, traversalItem))
+      );
+    const newTraversalItemCollection = ([] as TraversalItem[]).concat(
+      ...unflatNewTraversalItemCollection
+    );
+
+    this.traversal.currentTraversalItemCollection = newTraversalItemCollection;
+    return new TraversalStep(this.traversal, newTraversalItemCollection);
   }
   inE(...edgeTypes: string[]) {
-    const newCollection = _inE(this, ...edgeTypes);
-    this.traversal.traversal.push(newCollection);
-    return newCollection;
+    const unflatNewTraversalItemCollection = this.traversalItemCollection
+      .filter(traversalItem => traversalItem.traversalItem._type === 'vertex')
+      .map(traversalItem =>
+        (traversalItem.traversalItem as VirtualVertex)._inE
+          .filter(virtualEdge =>
+            edgeTypes.length ? edgeTypes.includes(virtualEdge._label) : true
+          )
+          .map(virtualEdge => new TraversalItem(virtualEdge, traversalItem))
+      );
+    const newTraversalItemCollection = ([] as TraversalItem[]).concat(
+      ...unflatNewTraversalItemCollection
+    );
+
+    this.traversal.currentTraversalItemCollection = newTraversalItemCollection;
+    return new TraversalStep(this.traversal, newTraversalItemCollection);
   }
   label() {}
   map() {}
@@ -65,7 +128,9 @@ export default class TraversalStep {
    * corresponding to the current collection instance.
    */
   next() {
-    return this.collectionData;
+    return this.traversalItemCollection.map(
+      traversalItem => traversalItem.traversalItem._origin
+    );
   }
   not() {}
   /**
@@ -82,14 +147,39 @@ export default class TraversalStep {
    * label of the edges to follow.
    */
   out(...edgeTypes: string[]) {
-    const newCollection = _out(this, ...edgeTypes);
-    this.traversal.traversal.push(newCollection);
-    return newCollection;
+    const unflatNewTraversalItemCollection = this.traversalItemCollection
+      .filter(traversalItem => traversalItem.traversalItem._type === 'vertex')
+      .map(traversalItem =>
+        (traversalItem.traversalItem as VirtualVertex)._outE
+          .filter(virtualEdge =>
+            edgeTypes.length ? edgeTypes.includes(virtualEdge._label) : true
+          )
+          .map(virtualEdge => virtualEdge._inV)
+          .map(virtualVertex => new TraversalItem(virtualVertex, traversalItem))
+      );
+    const newTraversalItemCollection = ([] as TraversalItem[]).concat(
+      ...unflatNewTraversalItemCollection
+    );
+
+    this.traversal.currentTraversalItemCollection = newTraversalItemCollection;
+    return new TraversalStep(this.traversal, newTraversalItemCollection);
   }
   outE(...edgeTypes: string[]) {
-    const newCollection = _outE(this, ...edgeTypes);
-    this.traversal.traversal.push(newCollection);
-    return newCollection;
+    const unflatNewTraversalItemCollection = this.traversalItemCollection
+      .filter(traversalItem => traversalItem.traversalItem._type === 'vertex')
+      .map(traversalItem =>
+        (traversalItem.traversalItem as VirtualVertex)._outE
+          .filter(virtualEdge =>
+            edgeTypes.length ? edgeTypes.includes(virtualEdge._label) : true
+          )
+          .map(virtualEdge => new TraversalItem(virtualEdge, traversalItem))
+      );
+    const newTraversalItemCollection = ([] as TraversalItem[]).concat(
+      ...unflatNewTraversalItemCollection
+    );
+
+    this.traversal.currentTraversalItemCollection = newTraversalItemCollection;
+    return new TraversalStep(this.traversal, newTraversalItemCollection);
   }
   path() {}
   repeat() {}

@@ -1,6 +1,7 @@
 import test from 'ava';
 import Traversal from '../../traversal/Traversal';
 import { CollectionData } from '../types';
+import TinkerGraph from '../../tinkerGraph/TinkerGraph';
 
 const graphData = {
   mode: 'NORMAL',
@@ -94,7 +95,8 @@ const graphData = {
   ],
 };
 
-const g = new Traversal(graphData);
+const graph = TinkerGraph.open(graphData);
+const g = graph.traversal();
 
 test('Get all outgoing and incoming edges', t => {
   const actualResult = g
@@ -111,20 +113,20 @@ test('Get all outgoing and incoming edges', t => {
       _label: 'created',
     },
     {
-      weight: 1,
-      _id: '8',
-      _type: 'edge',
-      _outV: '1',
-      _inV: '4',
-      _label: 'knows',
-    },
-    {
       weight: 0.4000000059604645,
       _id: '11',
       _type: 'edge',
       _outV: '4',
       _inV: '3',
       _label: 'created',
+    },
+    {
+      weight: 1,
+      _id: '8',
+      _type: 'edge',
+      _outV: '1',
+      _inV: '4',
+      _label: 'knows',
     },
   ];
   t.deepEqual(actualResult, expectedResult);
@@ -180,20 +182,20 @@ test('Get all  outgoing or incoming edges of any of multiple specified edge type
       _label: 'created',
     },
     {
-      weight: 1,
-      _id: '8',
-      _type: 'edge',
-      _outV: '1',
-      _inV: '4',
-      _label: 'knows',
-    },
-    {
       weight: 0.4000000059604645,
       _id: '11',
       _type: 'edge',
       _outV: '4',
       _inV: '3',
       _label: 'created',
+    },
+    {
+      weight: 1,
+      _id: '8',
+      _type: 'edge',
+      _outV: '1',
+      _inV: '4',
+      _label: 'knows',
     },
   ];
   t.deepEqual(actualResult, expectedResult);

@@ -1,6 +1,7 @@
 import test from 'ava';
 import Traversal from '../../traversal/Traversal';
 import { CollectionData } from '../types';
+import TinkerGraph from '../../tinkerGraph/TinkerGraph';
 
 const graphData = {
   mode: 'NORMAL',
@@ -94,7 +95,8 @@ const graphData = {
   ],
 };
 
-const g = new Traversal(graphData);
+const graph = TinkerGraph.open(graphData);
+const g = graph.traversal();
 
 test('Get all vertices reached through outgoing edges', t => {
   const actualResult = g
@@ -103,15 +105,15 @@ test('Get all vertices reached through outgoing edges', t => {
     .next();
   const expectedResult = [
     {
-      name: 'lop',
-      lang: 'java',
-      _id: '3',
-      _type: 'vertex',
-    },
-    {
       name: 'vadas',
       age: 27,
       _id: '2',
+      _type: 'vertex',
+    },
+    {
+      name: 'lop',
+      lang: 'java',
+      _id: '3',
       _type: 'vertex',
     },
     {
@@ -142,6 +144,18 @@ test('Get all vertices reached through outgoing edges of a specific type', t => 
       _id: '5',
       _type: 'vertex',
     },
+    {
+      name: 'lop',
+      lang: 'java',
+      _id: '3',
+      _type: 'vertex',
+    },
+    {
+      name: 'lop',
+      lang: 'java',
+      _id: '3',
+      _type: 'vertex',
+    },
   ];
   t.deepEqual(actualResult, expectedResult);
 });
@@ -162,15 +176,15 @@ test('Get all vertices reached through outgoing edges of any of multiple specifi
     .next();
   const expectedResult = [
     {
-      name: 'lop',
-      lang: 'java',
-      _id: '3',
-      _type: 'vertex',
-    },
-    {
       name: 'vadas',
       age: 27,
       _id: '2',
+      _type: 'vertex',
+    },
+    {
+      name: 'lop',
+      lang: 'java',
+      _id: '3',
       _type: 'vertex',
     },
     {

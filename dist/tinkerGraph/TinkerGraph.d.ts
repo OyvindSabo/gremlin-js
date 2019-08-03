@@ -22,6 +22,7 @@ export interface VirtualVertex {
     _type: string;
     _outE: VirtualEdge[];
     _inE: VirtualEdge[];
+    _origin: VertexData;
 }
 export interface VirtualEdge {
     _id: string;
@@ -29,6 +30,7 @@ export interface VirtualEdge {
     _outV: VirtualVertex;
     _inV: VirtualVertex;
     _label: string;
+    _origin: EdgeData;
 }
 /**
  * The static TinkerGraph class is mainly responsble for reading in a json file

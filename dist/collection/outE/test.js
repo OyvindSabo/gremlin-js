@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var ava_1 = require("ava");
-var Traversal_1 = require("../../traversal/Traversal");
+var TinkerGraph_1 = require("../../tinkerGraph/TinkerGraph");
 var graphData = {
     mode: 'NORMAL',
     vertices: [
@@ -93,7 +93,8 @@ var graphData = {
         },
     ],
 };
-var g = new Traversal_1.default(graphData);
+var graph = TinkerGraph_1.default.open(graphData);
+var g = graph.traversal();
 ava_1.default('Get all outgoing edges', function (t) {
     var actualResult = g
         .V('1')

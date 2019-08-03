@@ -1,6 +1,6 @@
 import test from 'ava';
-import Traversal from '../../traversal/Traversal';
 import { CollectionData } from '../types';
+import TinkerGraph from '../../tinkerGraph/TinkerGraph';
 
 const graphData = {
   mode: 'NORMAL',
@@ -94,7 +94,8 @@ const graphData = {
   ],
 };
 
-const g = new Traversal(graphData);
+const graph = TinkerGraph.open(graphData);
+const g = graph.traversal();
 
 test('Get all vertices reached through outgoing or incoming edges', t => {
   const actualResult = g
@@ -102,6 +103,12 @@ test('Get all vertices reached through outgoing or incoming edges', t => {
     .both()
     .next();
   const expectedResult = [
+    {
+      name: 'ripple',
+      lang: 'java',
+      _id: '5',
+      _type: 'vertex',
+    },
     {
       name: 'lop',
       lang: 'java',
@@ -112,12 +119,6 @@ test('Get all vertices reached through outgoing or incoming edges', t => {
       name: 'marko',
       age: 29,
       _id: '1',
-      _type: 'vertex',
-    },
-    {
-      name: 'ripple',
-      lang: 'java',
-      _id: '5',
       _type: 'vertex',
     },
   ];
@@ -131,15 +132,15 @@ test('Get all vertices reached through outgoing or incoming edges of a specific 
     .next();
   const expectedResult = [
     {
-      name: 'lop',
-      lang: 'java',
-      _id: '3',
-      _type: 'vertex',
-    },
-    {
       name: 'ripple',
       lang: 'java',
       _id: '5',
+      _type: 'vertex',
+    },
+    {
+      name: 'lop',
+      lang: 'java',
+      _id: '3',
       _type: 'vertex',
     },
   ];
@@ -162,6 +163,12 @@ test('Get all vertices reached through outgoing or incoming edges of any of mult
     .next();
   const expectedResult = [
     {
+      name: 'ripple',
+      lang: 'java',
+      _id: '5',
+      _type: 'vertex',
+    },
+    {
       name: 'lop',
       lang: 'java',
       _id: '3',
@@ -171,12 +178,6 @@ test('Get all vertices reached through outgoing or incoming edges of any of mult
       name: 'marko',
       age: 29,
       _id: '1',
-      _type: 'vertex',
-    },
-    {
-      name: 'ripple',
-      lang: 'java',
-      _id: '5',
       _type: 'vertex',
     },
   ];

@@ -1,6 +1,6 @@
 import test from 'ava';
-import Traversal from '../../traversal/Traversal';
 import { CollectionData } from '../types';
+import TinkerGraph from '../../tinkerGraph/TinkerGraph';
 
 const graphData = {
   mode: 'NORMAL',
@@ -94,7 +94,8 @@ const graphData = {
   ],
 };
 
-const g = new Traversal(graphData);
+const graph = TinkerGraph.open(graphData);
+const g = graph.traversal();
 
 test('Get all vertices reached through incoming edges', t => {
   const actualResult = g
@@ -109,15 +110,15 @@ test('Get all vertices reached through incoming edges', t => {
       _type: 'vertex',
     },
     {
-      name: 'peter',
-      age: 35,
-      _id: '6',
-      _type: 'vertex',
-    },
-    {
       name: 'josh',
       age: 32,
       _id: '4',
+      _type: 'vertex',
+    },
+    {
+      name: 'peter',
+      age: 35,
+      _id: '6',
       _type: 'vertex',
     },
   ];
@@ -136,11 +137,17 @@ test('Get all vertices reached through incoming edges of a specific type', t => 
       _id: '1',
       _type: 'vertex',
     },
+    {
+      name: 'marko',
+      age: 29,
+      _id: '1',
+      _type: 'vertex',
+    },
   ];
   t.deepEqual(actualResult, expectedResult);
 });
 
-test('Get all vertices reached through outgoing edges of a nonexistent type', t => {
+test('Get all vertices reached through incoming edges of a nonexistent type', t => {
   const actualResult = g
     .V()
     .in('uses')

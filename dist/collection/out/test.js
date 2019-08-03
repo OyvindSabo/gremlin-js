@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var ava_1 = require("ava");
-var Traversal_1 = require("../../traversal/Traversal");
+var TinkerGraph_1 = require("../../tinkerGraph/TinkerGraph");
 var graphData = {
     mode: 'NORMAL',
     vertices: [
@@ -93,7 +93,8 @@ var graphData = {
         },
     ],
 };
-var g = new Traversal_1.default(graphData);
+var graph = TinkerGraph_1.default.open(graphData);
+var g = graph.traversal();
 ava_1.default('Get all vertices reached through outgoing edges', function (t) {
     var actualResult = g
         .V('1')
@@ -101,15 +102,15 @@ ava_1.default('Get all vertices reached through outgoing edges', function (t) {
         .next();
     var expectedResult = [
         {
-            name: 'lop',
-            lang: 'java',
-            _id: '3',
-            _type: 'vertex',
-        },
-        {
             name: 'vadas',
             age: 27,
             _id: '2',
+            _type: 'vertex',
+        },
+        {
+            name: 'lop',
+            lang: 'java',
+            _id: '3',
             _type: 'vertex',
         },
         {
@@ -139,6 +140,18 @@ ava_1.default('Get all vertices reached through outgoing edges of a specific typ
             _id: '5',
             _type: 'vertex',
         },
+        {
+            name: 'lop',
+            lang: 'java',
+            _id: '3',
+            _type: 'vertex',
+        },
+        {
+            name: 'lop',
+            lang: 'java',
+            _id: '3',
+            _type: 'vertex',
+        },
     ];
     t.deepEqual(actualResult, expectedResult);
 });
@@ -157,15 +170,15 @@ ava_1.default('Get all vertices reached through outgoing edges of any of multipl
         .next();
     var expectedResult = [
         {
-            name: 'lop',
-            lang: 'java',
-            _id: '3',
-            _type: 'vertex',
-        },
-        {
             name: 'vadas',
             age: 27,
             _id: '2',
+            _type: 'vertex',
+        },
+        {
+            name: 'lop',
+            lang: 'java',
+            _id: '3',
             _type: 'vertex',
         },
         {

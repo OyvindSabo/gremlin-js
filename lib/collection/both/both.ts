@@ -1,4 +1,4 @@
-import Collection from '../Collection';
+/*import Collection from '../Collection';
 
 export const _both = (collection: Collection, ...edgeTypes: string[]) => {
   const allEdges = collection.traversal.graphData.edges;
@@ -19,4 +19,4 @@ export const _both = (collection: Collection, ...edgeTypes: string[]) => {
   });
   const newCollection = new Collection(collection.traversal, newCollectionData);
   return newCollection;
-};
+};*/

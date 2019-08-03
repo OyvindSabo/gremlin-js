@@ -96,11 +96,15 @@ var graphData = {
         },
     ],
 };
-/*const graph = TinkerGraph.open();
-const g = graph.traversal();*/
+/*const g = graph.traversal();*/
 // Assuming I already have graphData stored in local memory
 var graph = TinkerGraph_1.default.open(graphData);
-console.log('graph: ', graph);
+var g = graph.traversal();
+var result = g
+    .V()
+    .in('knows')
+    .next();
+console.log('result: ', result);
 /*const g = new Traversal(graphData);
 console.log(`g.V('1').next() ==>`, g.V('1').next());
 console.log(`g.V().next() ==>`, g.V().next());

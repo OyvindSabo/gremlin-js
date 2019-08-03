@@ -1,5 +1,3 @@
-import Graph from '../graph/Graph';
-import Traversal from '../traversal/Traversal';
 import VirtualGraph from '../virtualGraph/VirtualGraph';
 
 export interface VertexData {
@@ -28,6 +26,7 @@ export interface VirtualVertex {
   _type: string;
   _outE: VirtualEdge[];
   _inE: VirtualEdge[];
+  _origin: VertexData;
 }
 
 export interface VirtualEdge {
@@ -36,6 +35,7 @@ export interface VirtualEdge {
   _outV: VirtualVertex;
   _inV: VirtualVertex;
   _label: string;
+  _origin: EdgeData;
 }
 
 /**
@@ -54,6 +54,7 @@ const TinkerGraph = {
           ...vertexData,
           _outE: [],
           _inE: [],
+          _origin: vertexData,
         }
       );
       virtualVertices[virtualVertex._id] = virtualVertex;
@@ -66,6 +67,7 @@ const TinkerGraph = {
           ...edgeData,
           _outV: virtualVertices[edgeData._outV],
           _inV: virtualVertices[edgeData._inV],
+          _origin: edgeData,
         }
       );
       virtualEdge._outV._outE.push(virtualEdge);

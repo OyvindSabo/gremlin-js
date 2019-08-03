@@ -22,12 +22,12 @@ var TinkerGraph = {
         var virtualVertices = {};
         var vertices = graphData.vertices, edges = graphData.edges;
         vertices.forEach(function (vertexData) {
-            var virtualVertex = Object.assign({}, __assign({}, vertexData, { _outE: [], _inE: [] }));
+            var virtualVertex = Object.assign({}, __assign({}, vertexData, { _outE: [], _inE: [], _origin: vertexData }));
             virtualVertices[virtualVertex._id] = virtualVertex;
         });
         var virtualEdges = {};
         edges.forEach(function (edgeData) {
-            var virtualEdge = Object.assign({}, __assign({}, edgeData, { _outV: virtualVertices[edgeData._outV], _inV: virtualVertices[edgeData._inV] }));
+            var virtualEdge = Object.assign({}, __assign({}, edgeData, { _outV: virtualVertices[edgeData._outV], _inV: virtualVertices[edgeData._inV], _origin: edgeData }));
             virtualEdge._outV._outE.push(virtualEdge);
             virtualEdge._inV._inE.push(virtualEdge);
             virtualEdges[virtualEdge._id] = virtualEdge;

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var ava_1 = require("ava");
-var Traversal_1 = require("../../traversal/Traversal");
+var TinkerGraph_1 = require("../../tinkerGraph/TinkerGraph");
 var graphData = {
     mode: 'NORMAL',
     vertices: [
@@ -93,13 +93,20 @@ var graphData = {
         },
     ],
 };
-var g = new Traversal_1.default(graphData);
+var graph = TinkerGraph_1.default.open(graphData);
+var g = graph.traversal();
 ava_1.default('Get all vertices reached through outgoing or incoming edges', function (t) {
     var actualResult = g
         .V('4')
         .both()
         .next();
     var expectedResult = [
+        {
+            name: 'ripple',
+            lang: 'java',
+            _id: '5',
+            _type: 'vertex',
+        },
         {
             name: 'lop',
             lang: 'java',
@@ -112,12 +119,6 @@ ava_1.default('Get all vertices reached through outgoing or incoming edges', fun
             _id: '1',
             _type: 'vertex',
         },
-        {
-            name: 'ripple',
-            lang: 'java',
-            _id: '5',
-            _type: 'vertex',
-        },
     ];
     t.deepEqual(actualResult, expectedResult);
 });
@@ -128,15 +129,15 @@ ava_1.default('Get all vertices reached through outgoing or incoming edges of a 
         .next();
     var expectedResult = [
         {
-            name: 'lop',
-            lang: 'java',
-            _id: '3',
-            _type: 'vertex',
-        },
-        {
             name: 'ripple',
             lang: 'java',
             _id: '5',
+            _type: 'vertex',
+        },
+        {
+            name: 'lop',
+            lang: 'java',
+            _id: '3',
             _type: 'vertex',
         },
     ];
@@ -157,6 +158,12 @@ ava_1.default('Get all vertices reached through outgoing or incoming edges of an
         .next();
     var expectedResult = [
         {
+            name: 'ripple',
+            lang: 'java',
+            _id: '5',
+            _type: 'vertex',
+        },
+        {
             name: 'lop',
             lang: 'java',
             _id: '3',
@@ -166,12 +173,6 @@ ava_1.default('Get all vertices reached through outgoing or incoming edges of an
             name: 'marko',
             age: 29,
             _id: '1',
-            _type: 'vertex',
-        },
-        {
-            name: 'ripple',
-            lang: 'java',
-            _id: '5',
             _type: 'vertex',
         },
     ];
