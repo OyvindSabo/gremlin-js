@@ -21,13 +21,13 @@ export default class TraversalStep {
   }
   and() {}
   as() {}
-  both(...edgeTypes: string[]) {
-    const newTraversalItemCollection = _both(this, ...edgeTypes);
+  both(...edgeLabels: string[]) {
+    const newTraversalItemCollection = _both(this, ...edgeLabels);
     this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
     return new TraversalStep(this._traversal, newTraversalItemCollection);
   }
-  bothE(...edgeTypes: string[]) {
-    const newTraversalItemCollection = _bothE(this, ...edgeTypes);
+  bothE(...edgeLabels: string[]) {
+    const newTraversalItemCollection = _bothE(this, ...edgeLabels);
     this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
     return new TraversalStep(this._traversal, newTraversalItemCollection);
   }
@@ -51,13 +51,13 @@ export default class TraversalStep {
   filter() {}
   has() {}
   hasLabel() {}
-  in(...edgeTypes: string[]) {
-    const newTraversalItemCollection = _in(this, ...edgeTypes);
+  in(...edgeLabels: string[]) {
+    const newTraversalItemCollection = _in(this, ...edgeLabels);
     this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
     return new TraversalStep(this._traversal, newTraversalItemCollection);
   }
-  inE(...edgeTypes: string[]) {
-    const newTraversalItemCollection = _inE(this, ...edgeTypes);
+  inE(...edgeLabels: string[]) {
+    const newTraversalItemCollection = _inE(this, ...edgeLabels);
     this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
     return new TraversalStep(this._traversal, newTraversalItemCollection);
   }
@@ -86,13 +86,13 @@ export default class TraversalStep {
    * An arbitrary amount of string arguments can be supplied to specify the
    * label of the edges to follow.
    */
-  out(...edgeTypes: string[]) {
-    const newTraversalItemCollection = _out(this, ...edgeTypes);
+  out(...edgeLabels: string[]) {
+    const newTraversalItemCollection = _out(this, ...edgeLabels);
     this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
     return new TraversalStep(this._traversal, newTraversalItemCollection);
   }
-  outE(...edgeTypes: string[]) {
-    const newTraversalItemCollection = _outE(this, ...edgeTypes);
+  outE(...edgeLabels: string[]) {
+    const newTraversalItemCollection = _outE(this, ...edgeLabels);
     this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
     return new TraversalStep(this._traversal, newTraversalItemCollection);
   }

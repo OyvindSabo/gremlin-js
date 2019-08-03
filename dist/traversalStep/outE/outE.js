@@ -3,16 +3,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var TraversalItem_1 = require("../../traversalItem/TraversalItem");
 exports._outE = function (traversalStep) {
     var _a;
-    var edgeTypes = [];
+    var edgeLabels = [];
     for (var _i = 1; _i < arguments.length; _i++) {
-        edgeTypes[_i - 1] = arguments[_i];
+        edgeLabels[_i - 1] = arguments[_i];
     }
     var unflatNewTraversalItemCollection = traversalStep._traversalItemCollection
         .filter(function (traversalItem) { return traversalItem.traversalItem._type === 'vertex'; })
         .map(function (traversalItem) {
         return traversalItem.traversalItem._outE
             .filter(function (virtualEdge) {
-            return edgeTypes.length ? edgeTypes.includes(virtualEdge._label) : true;
+            return edgeLabels.length ? edgeLabels.includes(virtualEdge._label) : true;
         })
             .map(function (virtualEdge) { return new TraversalItem_1.default(virtualEdge, traversalItem); });
     });

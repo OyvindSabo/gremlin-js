@@ -139,10 +139,12 @@ result: [{
 The example above illustrates how I intend the library t be used, and does currently not work. However, if we have the graph in memory as an object called graphData, we can successfully do the following:
 
 ```
-const g = new Traversal(graphData);
+const graph = TinkerGraph.open(graphData);
+const g = graph.traversal();
+const result = g.E('knows').next();
 
 const result = g.V().in('created').out('knows').next()
 console.log('result: ', result);
 ```
 
-At the time of writing, the only supported traversal steps are `both`, `bothE`, `in`, `inE`, `out` and `outE`.
+At the time of writing, the only supported traversal steps are `both`, `bothE`, `bothV`, `in`, `inE`, `out` and `outE`.

@@ -6,8 +6,8 @@ export default class TraversalStep {
     constructor(traversal: Traversal, traversalItemCollection: TraversalItem[]);
     and(): void;
     as(): void;
-    both(...edgeTypes: string[]): TraversalStep;
-    bothE(...edgeTypes: string[]): TraversalStep;
+    both(...edgeLabels: string[]): TraversalStep;
+    bothE(...edgeLabels: string[]): TraversalStep;
     bothV(): TraversalStep;
     branch(): void;
     /**
@@ -24,8 +24,8 @@ export default class TraversalStep {
     filter(): void;
     has(): void;
     hasLabel(): void;
-    in(...edgeTypes: string[]): TraversalStep;
-    inE(...edgeTypes: string[]): TraversalStep;
+    in(...edgeLabels: string[]): TraversalStep;
+    inE(...edgeLabels: string[]): TraversalStep;
     label(): void;
     map(): void;
     /**
@@ -47,8 +47,8 @@ export default class TraversalStep {
      * An arbitrary amount of string arguments can be supplied to specify the
      * label of the edges to follow.
      */
-    out(...edgeTypes: string[]): TraversalStep;
-    outE(...edgeTypes: string[]): TraversalStep;
+    out(...edgeLabels: string[]): TraversalStep;
+    outE(...edgeLabels: string[]): TraversalStep;
     path(): void;
     repeat(): void;
     sideEffect(): void;

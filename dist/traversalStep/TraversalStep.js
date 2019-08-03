@@ -19,20 +19,20 @@ var TraversalStep = /** @class */ (function () {
     TraversalStep.prototype.and = function () { };
     TraversalStep.prototype.as = function () { };
     TraversalStep.prototype.both = function () {
-        var edgeTypes = [];
+        var edgeLabels = [];
         for (var _i = 0; _i < arguments.length; _i++) {
-            edgeTypes[_i] = arguments[_i];
+            edgeLabels[_i] = arguments[_i];
         }
-        var newTraversalItemCollection = both_1._both.apply(void 0, [this].concat(edgeTypes));
+        var newTraversalItemCollection = both_1._both.apply(void 0, [this].concat(edgeLabels));
         this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
         return new TraversalStep(this._traversal, newTraversalItemCollection);
     };
     TraversalStep.prototype.bothE = function () {
-        var edgeTypes = [];
+        var edgeLabels = [];
         for (var _i = 0; _i < arguments.length; _i++) {
-            edgeTypes[_i] = arguments[_i];
+            edgeLabels[_i] = arguments[_i];
         }
-        var newTraversalItemCollection = bothE_1._bothE.apply(void 0, [this].concat(edgeTypes));
+        var newTraversalItemCollection = bothE_1._bothE.apply(void 0, [this].concat(edgeLabels));
         this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
         return new TraversalStep(this._traversal, newTraversalItemCollection);
     };
@@ -57,20 +57,20 @@ var TraversalStep = /** @class */ (function () {
     TraversalStep.prototype.has = function () { };
     TraversalStep.prototype.hasLabel = function () { };
     TraversalStep.prototype.in = function () {
-        var edgeTypes = [];
+        var edgeLabels = [];
         for (var _i = 0; _i < arguments.length; _i++) {
-            edgeTypes[_i] = arguments[_i];
+            edgeLabels[_i] = arguments[_i];
         }
-        var newTraversalItemCollection = in_1._in.apply(void 0, [this].concat(edgeTypes));
+        var newTraversalItemCollection = in_1._in.apply(void 0, [this].concat(edgeLabels));
         this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
         return new TraversalStep(this._traversal, newTraversalItemCollection);
     };
     TraversalStep.prototype.inE = function () {
-        var edgeTypes = [];
+        var edgeLabels = [];
         for (var _i = 0; _i < arguments.length; _i++) {
-            edgeTypes[_i] = arguments[_i];
+            edgeLabels[_i] = arguments[_i];
         }
-        var newTraversalItemCollection = inE_1._inE.apply(void 0, [this].concat(edgeTypes));
+        var newTraversalItemCollection = inE_1._inE.apply(void 0, [this].concat(edgeLabels));
         this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
         return new TraversalStep(this._traversal, newTraversalItemCollection);
     };
@@ -98,20 +98,20 @@ var TraversalStep = /** @class */ (function () {
      * label of the edges to follow.
      */
     TraversalStep.prototype.out = function () {
-        var edgeTypes = [];
+        var edgeLabels = [];
         for (var _i = 0; _i < arguments.length; _i++) {
-            edgeTypes[_i] = arguments[_i];
+            edgeLabels[_i] = arguments[_i];
         }
-        var newTraversalItemCollection = out_1._out.apply(void 0, [this].concat(edgeTypes));
+        var newTraversalItemCollection = out_1._out.apply(void 0, [this].concat(edgeLabels));
         this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
         return new TraversalStep(this._traversal, newTraversalItemCollection);
     };
     TraversalStep.prototype.outE = function () {
-        var edgeTypes = [];
+        var edgeLabels = [];
         for (var _i = 0; _i < arguments.length; _i++) {
-            edgeTypes[_i] = arguments[_i];
+            edgeLabels[_i] = arguments[_i];
         }
-        var newTraversalItemCollection = outE_1._outE.apply(void 0, [this].concat(edgeTypes));
+        var newTraversalItemCollection = outE_1._outE.apply(void 0, [this].concat(edgeLabels));
         this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
         return new TraversalStep(this._traversal, newTraversalItemCollection);
     };

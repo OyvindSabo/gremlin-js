@@ -4,20 +4,20 @@ import TraversalItem from '../../traversalItem/TraversalItem';
 
 export const _bothE = (
   traversalStep: TraversalStep,
-  ...edgeTypes: string[]
+  ...edgeLabels: string[]
 ) => {
   const unflatNewTraversalItemCollection = traversalStep._traversalItemCollection
     .filter(traversalItem => traversalItem.traversalItem._type === 'vertex')
     .map(traversalItem => {
       const outVertices = (traversalItem.traversalItem as VirtualVertex)._outE
         .filter(virtualEdge =>
-          edgeTypes.length ? edgeTypes.includes(virtualEdge._label) : true
+          edgeLabels.length ? edgeLabels.includes(virtualEdge._label) : true
         )
         .map(virtualEdge => new TraversalItem(virtualEdge, traversalItem));
 
       const inVertices = (traversalItem.traversalItem as VirtualVertex)._inE
         .filter(virtualEdge =>
-          edgeTypes.length ? edgeTypes.includes(virtualEdge._label) : true
+          edgeLabels.length ? edgeLabels.includes(virtualEdge._label) : true
         )
         .map(virtualEdge => new TraversalItem(virtualEdge, traversalItem));
 
