@@ -4,9 +4,9 @@ import TraversalItem from '../../traversalItem/TraversalItem';
 
 export const _inE = (traversalStep: TraversalStep, ...edgeLabels: string[]) => {
   const unflatNewTraversalItemCollection = traversalStep._traversalItemCollection
-    .filter(traversalItem => traversalItem.traversalItem._type === 'vertex')
+    .filter(traversalItem => traversalItem._traversalItem._type === 'vertex')
     .map(traversalItem =>
-      (traversalItem.traversalItem as VirtualVertex)._inE
+      (traversalItem._traversalItem as VirtualVertex)._inE
         .filter(virtualEdge =>
           edgeLabels.length ? edgeLabels.includes(virtualEdge._label) : true
         )

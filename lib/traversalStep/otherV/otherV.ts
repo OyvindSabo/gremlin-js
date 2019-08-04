@@ -4,12 +4,12 @@ import TraversalItem from '../../traversalItem/TraversalItem';
 
 export const _otherV = (traversalStep: TraversalStep) => {
   const newTraversalItemCollection = traversalStep._traversalItemCollection
-    .filter(traversalItem => traversalItem.traversalItem._type === 'edge')
-    .filter(traversalItem => traversalItem.previous)
+    .filter(traversalItem => traversalItem._traversalItem._type === 'edge')
+    .filter(traversalItem => traversalItem._previous)
     .map(traversalItem => {
-      const previousVertexId = traversalItem.previous!.traversalItem._id;
-      const inVertex = (traversalItem.traversalItem as VirtualEdge)._inV;
-      const outVertex = (traversalItem.traversalItem as VirtualEdge)._outV;
+      const previousVertexId = traversalItem._previous!._traversalItem._id;
+      const inVertex = (traversalItem._traversalItem as VirtualEdge)._inV;
+      const outVertex = (traversalItem._traversalItem as VirtualEdge)._outV;
       if (previousVertexId === inVertex._id) {
         return new TraversalItem(outVertex, traversalItem);
       }

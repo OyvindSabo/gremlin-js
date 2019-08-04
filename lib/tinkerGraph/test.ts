@@ -97,7 +97,7 @@ const virtualGraph = TinkerGraph.open(graphData);
 
 test('Test that the virtual graph contains all the vertex ids from the graph data', t => {
   graphData.vertices.forEach(({ _id }) => {
-    if (!virtualGraph.vertices[_id]) {
+    if (!virtualGraph._vertices[_id]) {
       t.fail();
     }
   });
@@ -106,7 +106,7 @@ test('Test that the virtual graph contains all the vertex ids from the graph dat
 
 test('Test that the virtual graph contains all the edge ids from the graph data', t => {
   graphData.edges.forEach(({ _id }) => {
-    if (!virtualGraph.edges[_id]) {
+    if (!virtualGraph._edges[_id]) {
       t.fail();
     }
   });
@@ -114,7 +114,7 @@ test('Test that the virtual graph contains all the edge ids from the graph data'
 });
 
 test('Test that for all virtual edges _outV references a virtual vertex which references it back', t => {
-  Object.values(virtualGraph.edges).forEach(virtualEdge => {
+  Object.values(virtualGraph._edges).forEach(virtualEdge => {
     const virtualVertex = virtualEdge._outV;
     if (!virtualVertex._outE.includes(virtualEdge)) {
       t.fail();
@@ -124,7 +124,7 @@ test('Test that for all virtual edges _outV references a virtual vertex which re
 });
 
 test('Test that for all virtual edges _inV references a virtual vertex which references it back', t => {
-  Object.values(virtualGraph.edges).forEach(virtualEdge => {
+  Object.values(virtualGraph._edges).forEach(virtualEdge => {
     const virtualVertex = virtualEdge._inV;
     if (!virtualVertex._inE.includes(virtualEdge)) {
       t.fail();
@@ -134,7 +134,7 @@ test('Test that for all virtual edges _inV references a virtual vertex which ref
 });
 
 test('Test that all _outE on a virtual vertex reference a virtual edge whch references it back', t => {
-  Object.values(virtualGraph.vertices).forEach(virtualVertex => {
+  Object.values(virtualGraph._vertices).forEach(virtualVertex => {
     virtualVertex._outE.forEach(virtualEdge => {
       if (virtualEdge._outV !== virtualVertex) {
         t.fail();
@@ -145,7 +145,7 @@ test('Test that all _outE on a virtual vertex reference a virtual edge whch refe
 });
 
 test('Test that all _inE on a virtual vertex reference a virtual edge whch references it back', t => {
-  Object.values(virtualGraph.vertices).forEach(virtualVertex => {
+  Object.values(virtualGraph._vertices).forEach(virtualVertex => {
     virtualVertex._inE.forEach(virtualEdge => {
       if (virtualEdge._inV !== virtualVertex) {
         t.fail();

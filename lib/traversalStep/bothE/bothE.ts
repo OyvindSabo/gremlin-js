@@ -7,15 +7,15 @@ export const _bothE = (
   ...edgeLabels: string[]
 ) => {
   const unflatNewTraversalItemCollection = traversalStep._traversalItemCollection
-    .filter(traversalItem => traversalItem.traversalItem._type === 'vertex')
+    .filter(traversalItem => traversalItem._traversalItem._type === 'vertex')
     .map(traversalItem => {
-      const outVertices = (traversalItem.traversalItem as VirtualVertex)._outE
+      const outVertices = (traversalItem._traversalItem as VirtualVertex)._outE
         .filter(virtualEdge =>
           edgeLabels.length ? edgeLabels.includes(virtualEdge._label) : true
         )
         .map(virtualEdge => new TraversalItem(virtualEdge, traversalItem));
 
-      const inVertices = (traversalItem.traversalItem as VirtualVertex)._inE
+      const inVertices = (traversalItem._traversalItem as VirtualVertex)._inE
         .filter(virtualEdge =>
           edgeLabels.length ? edgeLabels.includes(virtualEdge._label) : true
         )

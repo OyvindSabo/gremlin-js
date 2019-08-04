@@ -8,15 +8,15 @@ exports._both = function (traversalStep) {
         edgeLabels[_i - 1] = arguments[_i];
     }
     var unflatNewTraversalItemCollection = traversalStep._traversalItemCollection
-        .filter(function (traversalItem) { return traversalItem.traversalItem._type === 'vertex'; })
+        .filter(function (traversalItem) { return traversalItem._traversalItem._type === 'vertex'; })
         .map(function (traversalItem) {
-        var outVertices = traversalItem.traversalItem._outE
+        var outVertices = traversalItem._traversalItem._outE
             .filter(function (virtualEdge) {
             return edgeLabels.length ? edgeLabels.includes(virtualEdge._label) : true;
         })
             .map(function (virtualEdge) { return virtualEdge._inV; })
             .map(function (virtualVertex) { return new TraversalItem_1.default(virtualVertex, traversalItem); });
-        var inVertices = traversalItem.traversalItem._inE
+        var inVertices = traversalItem._traversalItem._inE
             .filter(function (virtualEdge) {
             return edgeLabels.length ? edgeLabels.includes(virtualEdge._label) : true;
         })

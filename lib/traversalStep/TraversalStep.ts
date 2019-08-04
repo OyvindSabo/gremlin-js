@@ -24,17 +24,17 @@ export default class TraversalStep {
   as() {}
   both(...edgeLabels: string[]) {
     const newTraversalItemCollection = _both(this, ...edgeLabels);
-    this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
+    this._traversal._currentTraversalItemCollection = newTraversalItemCollection;
     return new TraversalStep(this._traversal, newTraversalItemCollection);
   }
   bothE(...edgeLabels: string[]) {
     const newTraversalItemCollection = _bothE(this, ...edgeLabels);
-    this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
+    this._traversal._currentTraversalItemCollection = newTraversalItemCollection;
     return new TraversalStep(this._traversal, newTraversalItemCollection);
   }
   bothV() {
     const newTraversalItemCollection = _bothV(this);
-    this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
+    this._traversal._currentTraversalItemCollection = newTraversalItemCollection;
     return new TraversalStep(this._traversal, newTraversalItemCollection);
   }
   branch() {}
@@ -54,12 +54,12 @@ export default class TraversalStep {
   hasLabel() {}
   in(...edgeLabels: string[]) {
     const newTraversalItemCollection = _in(this, ...edgeLabels);
-    this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
+    this._traversal._currentTraversalItemCollection = newTraversalItemCollection;
     return new TraversalStep(this._traversal, newTraversalItemCollection);
   }
   inE(...edgeLabels: string[]) {
     const newTraversalItemCollection = _inE(this, ...edgeLabels);
-    this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
+    this._traversal._currentTraversalItemCollection = newTraversalItemCollection;
     return new TraversalStep(this._traversal, newTraversalItemCollection);
   }
   label() {}
@@ -70,7 +70,7 @@ export default class TraversalStep {
    */
   next() {
     return this._traversalItemCollection.map(
-      traversalItem => traversalItem.traversalItem._origin
+      traversalItem => traversalItem._traversalItem._origin
     );
   }
   not() {}
@@ -83,7 +83,7 @@ export default class TraversalStep {
   option() {}
   otherV() {
     const newTraversalItemCollection = _otherV(this);
-    this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
+    this._traversal._currentTraversalItemCollection = newTraversalItemCollection;
     return new TraversalStep(this._traversal, newTraversalItemCollection);
   }
   /**
@@ -93,12 +93,12 @@ export default class TraversalStep {
    */
   out(...edgeLabels: string[]) {
     const newTraversalItemCollection = _out(this, ...edgeLabels);
-    this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
+    this._traversal._currentTraversalItemCollection = newTraversalItemCollection;
     return new TraversalStep(this._traversal, newTraversalItemCollection);
   }
   outE(...edgeLabels: string[]) {
     const newTraversalItemCollection = _outE(this, ...edgeLabels);
-    this._traversal.currentTraversalItemCollection = newTraversalItemCollection;
+    this._traversal._currentTraversalItemCollection = newTraversalItemCollection;
     return new TraversalStep(this._traversal, newTraversalItemCollection);
   }
   path() {}

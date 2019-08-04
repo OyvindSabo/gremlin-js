@@ -97,7 +97,7 @@ var virtualGraph = TinkerGraph_1.default.open(graphData);
 ava_1.default('Test that the virtual graph contains all the vertex ids from the graph data', function (t) {
     graphData.vertices.forEach(function (_a) {
         var _id = _a._id;
-        if (!virtualGraph.vertices[_id]) {
+        if (!virtualGraph._vertices[_id]) {
             t.fail();
         }
     });
@@ -106,14 +106,14 @@ ava_1.default('Test that the virtual graph contains all the vertex ids from the 
 ava_1.default('Test that the virtual graph contains all the edge ids from the graph data', function (t) {
     graphData.edges.forEach(function (_a) {
         var _id = _a._id;
-        if (!virtualGraph.edges[_id]) {
+        if (!virtualGraph._edges[_id]) {
             t.fail();
         }
     });
     t.pass();
 });
 ava_1.default('Test that for all virtual edges _outV references a virtual vertex which references it back', function (t) {
-    Object.values(virtualGraph.edges).forEach(function (virtualEdge) {
+    Object.values(virtualGraph._edges).forEach(function (virtualEdge) {
         var virtualVertex = virtualEdge._outV;
         if (!virtualVertex._outE.includes(virtualEdge)) {
             t.fail();
@@ -122,7 +122,7 @@ ava_1.default('Test that for all virtual edges _outV references a virtual vertex
     t.pass();
 });
 ava_1.default('Test that for all virtual edges _inV references a virtual vertex which references it back', function (t) {
-    Object.values(virtualGraph.edges).forEach(function (virtualEdge) {
+    Object.values(virtualGraph._edges).forEach(function (virtualEdge) {
         var virtualVertex = virtualEdge._inV;
         if (!virtualVertex._inE.includes(virtualEdge)) {
             t.fail();
@@ -131,7 +131,7 @@ ava_1.default('Test that for all virtual edges _inV references a virtual vertex 
     t.pass();
 });
 ava_1.default('Test that all _outE on a virtual vertex reference a virtual edge whch references it back', function (t) {
-    Object.values(virtualGraph.vertices).forEach(function (virtualVertex) {
+    Object.values(virtualGraph._vertices).forEach(function (virtualVertex) {
         virtualVertex._outE.forEach(function (virtualEdge) {
             if (virtualEdge._outV !== virtualVertex) {
                 t.fail();
@@ -141,7 +141,7 @@ ava_1.default('Test that all _outE on a virtual vertex reference a virtual edge 
     t.pass();
 });
 ava_1.default('Test that all _inE on a virtual vertex reference a virtual edge whch references it back', function (t) {
-    Object.values(virtualGraph.vertices).forEach(function (virtualVertex) {
+    Object.values(virtualGraph._vertices).forEach(function (virtualVertex) {
         virtualVertex._inE.forEach(function (virtualEdge) {
             if (virtualEdge._inV !== virtualVertex) {
                 t.fail();

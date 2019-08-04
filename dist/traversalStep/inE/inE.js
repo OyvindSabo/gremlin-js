@@ -8,9 +8,9 @@ exports._inE = function (traversalStep) {
         edgeLabels[_i - 1] = arguments[_i];
     }
     var unflatNewTraversalItemCollection = traversalStep._traversalItemCollection
-        .filter(function (traversalItem) { return traversalItem.traversalItem._type === 'vertex'; })
+        .filter(function (traversalItem) { return traversalItem._traversalItem._type === 'vertex'; })
         .map(function (traversalItem) {
-        return traversalItem.traversalItem._inE
+        return traversalItem._traversalItem._inE
             .filter(function (virtualEdge) {
             return edgeLabels.length ? edgeLabels.includes(virtualEdge._label) : true;
         })

@@ -8,11 +8,11 @@ import TraversalStep from '../traversalStep/TraversalStep';
  * const g = graph.Traversal()
  */
 export default class Traversal {
-  virtualGraph: VirtualGraph;
-  currentTraversalItemCollection: TraversalItem[];
+  _virtualGraph: VirtualGraph;
+  _currentTraversalItemCollection: TraversalItem[];
   constructor(virtualGraph: VirtualGraph) {
-    this.virtualGraph = virtualGraph;
-    this.currentTraversalItemCollection = [];
+    this._virtualGraph = virtualGraph;
+    this._currentTraversalItemCollection = [];
   }
   addE() {}
   addV() {}
@@ -24,14 +24,14 @@ export default class Traversal {
    * a collection of all the nodes in the graph will be returned.
    */
   E(...edgeIds: string[]) {
-    const virtualEdges = Object.values(this.virtualGraph.edges);
+    const virtualEdges = Object.values(this._virtualGraph._edges);
     const newCollectionData = edgeIds.length
       ? virtualEdges.filter(edge => edgeIds.includes(edge._id))
       : virtualEdges;
     const newTraversalItemCollection = newCollectionData.map(
       virtualEdge => new TraversalItem(virtualEdge)
     );
-    this.currentTraversalItemCollection = newTraversalItemCollection;
+    this._currentTraversalItemCollection = newTraversalItemCollection;
     return new TraversalStep(this, newTraversalItemCollection);
   }
   /**
@@ -41,14 +41,14 @@ export default class Traversal {
    * a collection of all the nodes in the graph will be returned.
    */
   V(...vertexIds: string[]) {
-    const virtualVertices = Object.values(this.virtualGraph.vertices);
+    const virtualVertices = Object.values(this._virtualGraph._vertices);
     const newCollectionData = vertexIds.length
       ? virtualVertices.filter(edge => vertexIds.includes(edge._id))
       : virtualVertices;
     const newTraversalItemCollection = newCollectionData.map(
       virtualEdge => new TraversalItem(virtualEdge)
     );
-    this.currentTraversalItemCollection = newTraversalItemCollection;
+    this._currentTraversalItemCollection = newTraversalItemCollection;
     return new TraversalStep(this, newTraversalItemCollection);
   }
 }

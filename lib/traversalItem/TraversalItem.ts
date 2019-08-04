@@ -1,13 +1,13 @@
 import { VirtualVertex, VirtualEdge } from '../tinkerGraph/TinkerGraph';
 
 export default class TraversalItem {
-  traversalItem: VirtualVertex | VirtualEdge;
-  previous?: TraversalItem;
+  _traversalItem: VirtualVertex | VirtualEdge;
+  _previous?: TraversalItem;
   constructor(
     traversalItem: VirtualVertex | VirtualEdge,
     previous?: TraversalItem
   ) {
-    this.traversalItem = traversalItem;
-    this.previous = previous;
+    this._traversalItem = traversalItem;
+    this._previous = previous;
   }
 }

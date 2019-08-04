@@ -7,8 +7,8 @@ import TraversalStep from '../traversalStep/TraversalStep';
  * const g = graph.Traversal()
  */
 export default class Traversal {
-    virtualGraph: VirtualGraph;
-    currentTraversalItemCollection: TraversalItem[];
+    _virtualGraph: VirtualGraph;
+    _currentTraversalItemCollection: TraversalItem[];
     constructor(virtualGraph: VirtualGraph);
     addE(): void;
     addV(): void;

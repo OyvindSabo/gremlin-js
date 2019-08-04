@@ -9,8 +9,8 @@ var TraversalStep_1 = require("../traversalStep/TraversalStep");
  */
 var Traversal = /** @class */ (function () {
     function Traversal(virtualGraph) {
-        this.virtualGraph = virtualGraph;
-        this.currentTraversalItemCollection = [];
+        this._virtualGraph = virtualGraph;
+        this._currentTraversalItemCollection = [];
     }
     Traversal.prototype.addE = function () { };
     Traversal.prototype.addV = function () { };
@@ -25,12 +25,12 @@ var Traversal = /** @class */ (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             edgeIds[_i] = arguments[_i];
         }
-        var virtualEdges = Object.values(this.virtualGraph.edges);
+        var virtualEdges = Object.values(this._virtualGraph._edges);
         var newCollectionData = edgeIds.length
             ? virtualEdges.filter(function (edge) { return edgeIds.includes(edge._id); })
             : virtualEdges;
         var newTraversalItemCollection = newCollectionData.map(function (virtualEdge) { return new TraversalItem_1.default(virtualEdge); });
-        this.currentTraversalItemCollection = newTraversalItemCollection;
+        this._currentTraversalItemCollection = newTraversalItemCollection;
         return new TraversalStep_1.default(this, newTraversalItemCollection);
     };
     /**
@@ -44,12 +44,12 @@ var Traversal = /** @class */ (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             vertexIds[_i] = arguments[_i];
         }
-        var virtualVertices = Object.values(this.virtualGraph.vertices);
+        var virtualVertices = Object.values(this._virtualGraph._vertices);
         var newCollectionData = vertexIds.length
             ? virtualVertices.filter(function (edge) { return vertexIds.includes(edge._id); })
             : virtualVertices;
         var newTraversalItemCollection = newCollectionData.map(function (virtualEdge) { return new TraversalItem_1.default(virtualEdge); });
-        this.currentTraversalItemCollection = newTraversalItemCollection;
+        this._currentTraversalItemCollection = newTraversalItemCollection;
         return new TraversalStep_1.default(this, newTraversalItemCollection);
     };
     return Traversal;
