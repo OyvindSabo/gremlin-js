@@ -8,6 +8,7 @@ import { _out } from './out/out';
 import { _inE } from './inE/inE';
 import { _in } from './in/in';
 import { _otherV } from './otherV/otherV';
+import { _select } from './select/select';
 
 export default class TraversalStep {
   _traversal: Traversal;
@@ -21,7 +22,12 @@ export default class TraversalStep {
     this._traversalItemCollection = traversalItemCollection;
   }
   and() {}
-  as() {}
+  as(label: string) {
+    this._traversalItemCollection.forEach(traversalItem => {
+      traversalItem._labels.push(label);
+    });
+    return this;
+  }
   both(...edgeLabels: string[]) {
     const newTraversalItemCollection = _both(this, ...edgeLabels);
     this._traversal._currentTraversalItemCollection = newTraversalItemCollection;
@@ -63,6 +69,7 @@ export default class TraversalStep {
     return new TraversalStep(this._traversal, newTraversalItemCollection);
   }
   label() {}
+  limit() {}
   map() {}
   /**
    * Next i used to terminate a query, i.e. to output the part of the graph
@@ -103,6 +110,12 @@ export default class TraversalStep {
   }
   path() {}
   repeat() {}
+  // Currenty only able to select items which are part of the path of the remaining items :(
+  select(...labels: string[]) {
+    const newTraversalItemCollection = _select(this, ...labels);
+    this._traversal._currentTraversalItemCollection = newTraversalItemCollection;
+    return new TraversalStep(this._traversal, newTraversalItemCollection);
+  }
   sideEffect() {}
   store() {}
   values() {}

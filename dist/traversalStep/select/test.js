@@ -1,10 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var TinkerGraph_1 = require("./tinkerGraph/TinkerGraph");
-/**
- * In gremlin-js we store graphs using the GraphSON format documented here:
- * https://github.com/tinkerpop/blueprints/wiki/GraphSON-Reader-and-Writer-Library
- */
+var ava_1 = require("ava");
+var TinkerGraph_1 = require("../../tinkerGraph/TinkerGraph");
 var graphData = {
     mode: 'NORMAL',
     vertices: [
@@ -96,26 +93,62 @@ var graphData = {
         },
     ],
 };
-/*const g = graph.traversal();*/
-// Assuming I already have graphData stored in local memory
 var graph = TinkerGraph_1.default.open(graphData);
 var g = graph.traversal();
-var result = g
-    .V('5')
-    .in()
-    .as('creators')
-    .out('created')
-    .in('created')
-    .as('creators')
-    .out()
-    .select('creators')
-    .next();
-console.log('result: ', result);
-/*const g = new Traversal(graphData);
-console.log(`g.V('1').next() ==>`, g.V('1').next());
-console.log(`g.V().next() ==>`, g.V().next());
-console.log(`g.E('10').next() ==>`, g.E('10').next());
-console.log(`g.E().next() ==>`, g.E().next());*/
-/*const marko = g.addV('person').property('name', 'marko').property('age',29).next();
-const lop = g.addV("software").property('name','lop').property('lang', 'java').next();
-g.addE("created").from(marko).to(lop).property('weight', 0.6).iterate();*/
+ava_1.default('Select a single previous step which is defined once', function (t) {
+    var actualResult = g
+        .V('4')
+        .in()
+        .as('marko')
+        .out()
+        .select('marko')
+        .next();
+    var expectedResult = [
+        {
+            name: 'marko',
+            age: 29,
+            _id: '1',
+            _type: 'vertex',
+        },
+    ];
+    t.deepEqual(actualResult, expectedResult);
+});
+ava_1.default('Select a single previous step which is the last of two definitions', function (t) {
+    var actualResult = g
+        .V('5')
+        .in()
+        .as('creators')
+        .out('created')
+        .in('created')
+        .as('creators')
+        .out()
+        .select('creators')
+        .next();
+    var expectedResult = [
+        {
+            name: 'josh',
+            age: 32,
+            _id: '4',
+            _type: 'vertex',
+        },
+        {
+            name: 'marko',
+            age: 29,
+            _id: '1',
+            _type: 'vertex',
+        },
+        {
+            name: 'josh',
+            age: 32,
+            _id: '4',
+            _type: 'vertex',
+        },
+        {
+            name: 'peter',
+            age: 35,
+            _id: '6',
+            _type: 'vertex',
+        },
+    ];
+    t.deepEqual(actualResult, expectedResult);
+});

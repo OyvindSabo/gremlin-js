@@ -147,4 +147,4 @@ const result = g.V().in('created').out('knows').next()
 console.log('result: ', result);
 ```
 
-At the time of writing, the only supported traversal steps are `both`, `bothE`, `bothV`, `in`, `inE`, `out` and `outE`.
+At the time of writing, the only supported traversal steps are `as`, `both`, `bothE`, `bothV`, `in`, `inE`, `otherV`, `out`, `outE` and `select` (`as` and `select` still have some quirks which need to be worked out).

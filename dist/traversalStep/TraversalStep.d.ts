@@ -5,7 +5,7 @@ export default class TraversalStep {
     _traversalItemCollection: TraversalItem[];
     constructor(traversal: Traversal, traversalItemCollection: TraversalItem[]);
     and(): void;
-    as(): void;
+    as(label: string): this;
     both(...edgeLabels: string[]): TraversalStep;
     bothE(...edgeLabels: string[]): TraversalStep;
     bothV(): TraversalStep;
@@ -27,6 +27,7 @@ export default class TraversalStep {
     in(...edgeLabels: string[]): TraversalStep;
     inE(...edgeLabels: string[]): TraversalStep;
     label(): void;
+    limit(): void;
     map(): void;
     /**
      * Next i used to terminate a query, i.e. to output the part of the graph
@@ -51,6 +52,7 @@ export default class TraversalStep {
     outE(...edgeLabels: string[]): TraversalStep;
     path(): void;
     repeat(): void;
+    select(...labels: string[]): TraversalStep;
     sideEffect(): void;
     store(): void;
     values(): void;

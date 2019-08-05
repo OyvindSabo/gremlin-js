@@ -1,10 +1,6 @@
-import Traversal from './traversal/Traversal';
-import TinkerGraph from './tinkerGraph/TinkerGraph';
+import test from 'ava';
+import TinkerGraph from '../../tinkerGraph/TinkerGraph';
 
-/**
- * In gremlin-js we store graphs using the GraphSON format documented here:
- * https://github.com/tinkerpop/blueprints/wiki/GraphSON-Reader-and-Writer-Library
- */
 const graphData = {
   mode: 'NORMAL',
   vertices: [
@@ -97,27 +93,64 @@ const graphData = {
   ],
 };
 
-/*const g = graph.traversal();*/
-// Assuming I already have graphData stored in local memory
 const graph = TinkerGraph.open(graphData);
 const g = graph.traversal();
-const result = g
-  .V('5')
-  .in()
-  .as('creators')
-  .out('created')
-  .in('created')
-  .as('creators')
-  .out()
-  .select('creators')
-  .next();
-console.log('result: ', result);
-/*const g = new Traversal(graphData);
-console.log(`g.V('1').next() ==>`, g.V('1').next());
-console.log(`g.V().next() ==>`, g.V().next());
-console.log(`g.E('10').next() ==>`, g.E('10').next());
-console.log(`g.E().next() ==>`, g.E().next());*/
 
-/*const marko = g.addV('person').property('name', 'marko').property('age',29).next();
-const lop = g.addV("software").property('name','lop').property('lang', 'java').next();
-g.addE("created").from(marko).to(lop).property('weight', 0.6).iterate();*/
+test('Select a single previous step which is defined once', t => {
+  const actualResult = g
+    .V('4')
+    .in()
+    .as('marko')
+    .out()
+    .select('marko')
+    .next();
+  const expectedResult = [
+    {
+      name: 'marko',
+      age: 29,
+      _id: '1',
+      _type: 'vertex',
+    },
+  ];
+  t.deepEqual(actualResult, expectedResult);
+});
+
+test('Select a single previous step which is the last of two definitions', t => {
+  const actualResult = g
+    .V('5')
+    .in()
+    .as('creators')
+    .out('created')
+    .in('created')
+    .as('creators')
+    .out()
+    .select('creators')
+    .next();
+  const expectedResult = [
+    {
+      name: 'josh',
+      age: 32,
+      _id: '4',
+      _type: 'vertex',
+    },
+    {
+      name: 'marko',
+      age: 29,
+      _id: '1',
+      _type: 'vertex',
+    },
+    {
+      name: 'josh',
+      age: 32,
+      _id: '4',
+      _type: 'vertex',
+    },
+    {
+      name: 'peter',
+      age: 35,
+      _id: '6',
+      _type: 'vertex',
+    },
+  ];
+  t.deepEqual(actualResult, expectedResult);
+});
