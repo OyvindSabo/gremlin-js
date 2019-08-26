@@ -141,7 +141,6 @@ The example above illustrates how I intend the library t be used, and does curre
 ```
 const graph = TinkerGraph.open(graphData);
 const g = graph.traversal();
-const result = g.E('knows').next();
 
 const result = g.V().in('created').out('knows').next()
 console.log('result: ', result);
